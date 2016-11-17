@@ -1,0 +1,72 @@
+# general settings
+ServerAliveInterval 15
+ServerAliveCountMax 15
+TCPKeepAlive yes
+
+# fd identity file
+Host momoiro*,vm*
+  IdentityFile ~/.ssh/id_fairy
+
+# inside or outside of FD-network
+Match host momoiro*,vm* exec "test $(curl -s httpbin.org/ip | jq -r '.origin') = '118.240.131.29'"
+  ProxyCommand none
+Match host momoiro*,vm* exec "test $(curl -s httpbin.org/ip | jq -r '.origin') != '118.240.131.29'"
+  ProxyCommand ssh -W %h:%p gateway
+
+# gateway to fd network
+Host gateway
+  User mitsutani
+  IdentityFile ~/.ssh/id_fairy
+  HostName m13000.fairydevices.jp
+
+# momoiro cluster
+Host momoiro*
+  User mitsutani
+
+Host momoiro01
+
+  HostName 192.168.48.53
+
+Host momoiro02
+  HostName 192.168.48.34
+
+# lxc-containers
+Host vm*
+  User ubuntu
+
+Host lxc-*
+  User ubuntu
+
+Host lms-*
+  User ubuntu
+
+Host vm01
+  HostName 192.168.48.26
+
+Host vm04
+  HostName 192.168.48.28
+
+Host vm04-lms2
+  HostName 192.168.48.81
+
+Host vm05
+  HostName 192.168.48.76
+
+Host lxc-lms2
+  HostName 192.168.48.81
+
+Host lms-multi1
+  HostName 192.168.48.63
+
+Host lms-multi8
+  HostName 192.168.48.75
+
+Host lms-single
+  HostName 192.168.48.71
+
+# General Multiple Port-forwarding (http://qiita.com/kawaz/items/a0151d3aa2b6f9c4b3b8)
+#Host */*
+#  ProxyCommand ssh -W "$(basename "%h")":%p "$(dirname "%h")"
+#
+#Host *+*
+#  ProxyCommand ssh -W "$(sed -E 's/.*\+//'<<<"%h")":%p "$(sed -E 's/\+[^\+]*//'<<<"%h")")")")")"

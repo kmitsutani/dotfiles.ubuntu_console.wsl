@@ -1,0 +1,44 @@
+# on_i
+[[plugins]]
+repo = 'Raimondi/delimitMate'
+on_i = 1
+
+# on_ft
+
+## preview
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = ['mkd', 'md', 'markdown', 'html']
+depends = ['open-browser.vim', 'webapi-vim']
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_source = ['previm']
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+on_source = ['previm']
+
+## Python
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = 'python'
+hook_add = '''
+  let g:jedi#popup_on_dot = 0
+  let g:jedi#completions_command = "<C-c>"
+  let g:jedi#popup_select_first = 0
+'''
+
+# markdown
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+on_ft = ['mkd', 'md', 'markdown']
+hook_add = '''
+  let g:vim_markdown_frontmatter = 1
+  let g:vim_markdown_math = 1
+'''
+
+# TOML
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'

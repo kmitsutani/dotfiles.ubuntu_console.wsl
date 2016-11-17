@@ -1,0 +1,7 @@
+xkb_keymap {
+	xkb_keycodes  { include "evdev+aliases(qwerty)"	};
+	xkb_types     { include "complete+thumbtypes"	};
+	xkb_compat    { include "complete+japan+hyperthumb"	};
+	xkb_symbols   { include "pc+jp(OADG109A)+inet(evdev)+104on109+ctrl(swapcaps)+homingthumb"	};
+	xkb_geometry  { include "pc(pc104)"	};
+};
