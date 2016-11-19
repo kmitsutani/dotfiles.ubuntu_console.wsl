@@ -22,7 +22,7 @@ function reprofile(){
 }
 
 # ssh-agent-singlton
-. $HOME/.bash_ssh_agent
+. $HOME/.bashrc_ssh_agent
 
 # machine dependent bashrc
 [ -f $HOME/.bashrc_machine ] && . $HOME/.bashrc_machine
