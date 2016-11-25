@@ -17,7 +17,7 @@ on_source = ['previm']
 
 [[plugins]]
 repo = 'mattn/webapi-vim'
-on_source = ['previm']
+on_source = ['previm', 'esa.vim']
 
 ## Python
 [[plugins]]
