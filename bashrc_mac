@@ -16,7 +16,10 @@ export LESSCHARSET=utf-8
 export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 
 export FREENAS="/Volumes/share0"
-ln -s $FEENAS /mnt/share0
+if [ "$(readlink /mnt/share0)" != $FREENAS ]; then
+  rmdir /mnt/share0
+  ln -s $FREENAS /mnt/share0
+fi
 
 
 set +u
