@@ -71,11 +71,11 @@ augroup python
   autocmd FileType python setlocal completeopt-=preview
 augroup END
 
-let s:not_bow = system('if [ -d /mnt/c/Users ]; then echo 0; else echo 1; fi')
+" let s:not_bow = system('if [ -d /mnt/c/Users ]; then echo 0; else echo 1; fi')
 
-if s:not_bow
+"if s:not_bow
   source ~/.vimrc_dein
-endif
+" endif
 
 if !&compatible
   set nocompatible
