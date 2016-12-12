@@ -8,7 +8,12 @@ ln -s $wd/bash_linux $HOME/.bash_osdep
 ln -s $wd/bash_profile $HOME/.bash_profile
 
 ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
-ln -s $wd/bashrc $HOME/.bashrc
+if [ -f $HOME/.bashrc ]; then
+  mv $HOME/.bashrc $HOME/.bashrc_old
+  ln -s $wd/bashrc $HOME/.bashrc
+else
+  ln -s $wd/bashrc $HOME/.bashrc
+fi
 
 # vim
 ln -s $wd/vimrc $HOME/.vimrc
