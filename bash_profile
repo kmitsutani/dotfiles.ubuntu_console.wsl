@@ -16,12 +16,17 @@ export LANG=en_US.UTF-8
 export EDITOR=vim
 
 # LL module/package paths
+set +u
 PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 export PYTHONPATH
+set -u
+
 # virtualenvwrapper
 if [ -f "/usr/local/bin/virtualenvwrapper.sh" ]; then
+    set +u
     export WORKON_HOME=$HOME/.virtualenvs
     source /usr/local/bin/virtualenvwrapper.sh
+    set -u
 fi
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig

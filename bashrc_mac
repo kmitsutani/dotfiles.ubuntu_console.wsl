@@ -16,7 +16,10 @@ export LESSCHARSET=utf-8
 export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 
 export FREENAS="/Volumes/share0"
-ln -s $FEENAS /mnt/share0
+if [ "$(readlink /mnt/share0)" != $FREENAS ]; then
+  rmdir /mnt/share0
+  ln -s $FREENAS /mnt/share0
+fi
 
 
 set +u
@@ -32,7 +35,7 @@ export C_INCLUDE_PATH=/usr/include:/usr/local/Cellar/python/2.7.11/Frameworks/Py
 export CPLUS_INCLUDE_PATH=/usr/local/opt/openssl/lib:/usr/local/include:/usr/local/opt/openssl/include:/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/include/python2.7:$CPLUS_INCLUDE_PATH
 
 # also dyld paths
-export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/include:/usr/local/lib/:/usr/local/opt/lib:$DYLD_LIBRARY_PATH
+# export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/include:/usr/local/lib/:/usr/local/opt/lib:$DYLD_LIBRARY_PATH
 export DYLD_FALLBACK_LIBRARY_PATH=$PAHT:/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/
 
 #########################################################

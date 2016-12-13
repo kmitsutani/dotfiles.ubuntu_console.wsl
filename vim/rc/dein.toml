@@ -33,3 +33,14 @@ repo = 'thinca/vim-quickrun'
 # sudo
 [[plugins]]
 repo = 'sudo.vim'
+
+#---------------------------
+# Web Service
+#---------------------------
+
+# esa.io
+repo = 'upamune/esa.vim'
+depends = ['webapi-vim']
+hook_add = '''
+  let g:esa_team = 'fairydevices'
+'''

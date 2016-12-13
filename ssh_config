@@ -19,6 +19,10 @@ Host gateway
   IdentityFile ~/.ssh/id_fairy
   HostName m13000.fairydevices.jp
 
+Host fd-pothos
+    HostName 192.168.48.80
+    User mitsutani
+
 # momoiro cluster
 Host momoiro*
   User mitsutani
