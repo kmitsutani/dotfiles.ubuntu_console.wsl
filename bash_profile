@@ -3,6 +3,7 @@
 . $HOME/.bash_path
 
 # OS dependent setting
+# ! should change to .profile_osdep
 . $HOME/.bash_osdep
 
 export XDG_CONFIG_HOME=$HOME/.config
