@@ -1,5 +1,4 @@
 paths="\
-  $(brew --prefix coreutils)/libexec/gnubin\
   /Applications/Osmo4.app/Contennts/MacOS\
 "
 for path in ${paths[@]};
