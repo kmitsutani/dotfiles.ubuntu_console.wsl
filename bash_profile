@@ -1,7 +1,3 @@
-# ssh-agent
-#eval $(ssh-agent)
-#ssh-add $HOME/.ssh/id_fairy
-
 # configuration of PATH
 ## add given path to PATH
 . $HOME/.bash_path
@@ -40,3 +36,5 @@ export DROPBOX="$HOME/Dropbox"
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+
+set +eu
