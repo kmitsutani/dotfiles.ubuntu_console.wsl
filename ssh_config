@@ -2,6 +2,7 @@
 ServerAliveInterval 15
 ServerAliveCountMax 15
 TCPKeepAlive yes
+ForwardAgent yes
 
 Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) == 0"
   ProxyCommand ssh -W %h:%p gateway

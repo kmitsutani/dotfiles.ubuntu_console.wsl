@@ -4,7 +4,7 @@ cd $wd
 
 # bash
 ln -s $wd/bash_path $HOME/.bash_path
-ln -s $wd/bash_linux $HOME/.bash_osdep
+ln -s $wd/bashrc_linux $HOME/.bashrc_osdep
 ln -s $wd/bash_profile $HOME/.bash_profile
 
 ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
