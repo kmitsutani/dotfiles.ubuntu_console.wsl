@@ -4,21 +4,13 @@ ServerAliveCountMax 15
 TCPKeepAlive yes
 ForwardAgent yes
 
-Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) == 0"
-  ProxyCommand ssh -W %h:%p gateway
-
 # fd identity file
 Host momoiro*,vm*
   IdentityFile ~/.ssh/id_fairy
 
-<<<<<<< HEAD
 # inside or outside of FD-network
-Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -ne 0"
-  ProxyCommand none
 Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
   ProxyCommand ssh -W %h:%p gateway
-=======
->>>>>>> 9fd631025cf96bb768b6796782bf81ce4a982fa6
 
 # gateway to fd network
 Host gateway
