@@ -1,13 +1,10 @@
-# ssh-agent
-#eval $(ssh-agent)
-#ssh-add $HOME/.ssh/id_fairy
-
 # configuration of PATH
 ## add given path to PATH
 . $HOME/.bash_path
 
 # OS dependent setting
-. $HOME/.profile_osdep
+# ! should change to .profile_osdep
+. $HOME/.bashrc_osdep
 
 export XDG_CONFIG_HOME=$HOME/.config
 

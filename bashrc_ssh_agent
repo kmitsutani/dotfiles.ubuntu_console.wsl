@@ -4,11 +4,13 @@ SSHAGENTARGS="-s"
 
 function start_agent {
   echo -n "Initialising new SSH agent…"
-    ${SSHAGENT} ${SSHAGENTARGS} | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    ${SSHAGENT} ${SSHAGENTARGS} >"${SSH_ENV}"
     echo succeeded
     chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}" >/dev/null
-    ssh-add $HOME/.ssh/id_*
+    . "${SSH_ENV}"
+    if [ $(find ${HOME}/.ssh -name "id_*" | wc -l) -gt 0 ]; then
+      ssh-add $HOME/.ssh/id_*
+    fi
 }
 
 # Source SSH settings, if applicable

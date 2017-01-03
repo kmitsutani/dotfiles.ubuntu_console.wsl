@@ -1,7 +1,7 @@
 # aliases
-if ls --color -d . >/dev/null 2>&1; then
+if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
     alias ls='ls --color=auto'
-elif ls -G -d . >/dev/nul 2>&1; then
+else
     alias ls='ls -G'
 fi
 alias preview='open -a Preview'
@@ -11,6 +11,7 @@ alias cronlist='crontab -l'
 alias vi="vim -u /etc/vimrc --noplugin"
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias sudoh="sudo -H"
+alias ssh="ssh -A"
 
 # shell functions
 function hyperthumb(){
@@ -22,7 +23,10 @@ function reprofile(){
 }
 
 # ssh-agent-singlton
-. $HOME/.bashrc_ssh_agent
+# . $HOME/.bashrc_ssh_agent
+
+# osdep bashrc
+[ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep
 
 # machine dependent bashrc
 [ -f $HOME/.bashrc_machine ] && . $HOME/.bashrc_machine

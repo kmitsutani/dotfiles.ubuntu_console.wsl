@@ -1,0 +1,55 @@
+paths="\
+  $(brew --prefix coreutils)/libexec/gnubin\
+  /Applications/Osmo4.app/Contennts/MacOS\
+"
+for path in ${paths[@]};
+do
+    PATH=$path:$PATH
+done
+export PATH
+
+unset path
+unset paths
+
+export LANG=ja_JP.UTF-8
+export LESSCHARSET=utf-8
+export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
+
+export FREENAS="/Volumes/share0"
+if [ "$(readlink /mnt/share0)" != $FREENAS ]; then
+  rmdir /mnt/share0
+  ln -s $FREENAS /mnt/share0
+fi
+
+
+set +u
+#######################################################
+#  C/C++
+#######################################################
+# gcc options (for some driver errors)
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS="-Qunused-arguments -stdlib=libstdc++"
+
+# C/C++ include path
+export C_INCLUDE_PATH=/usr/include:/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/include/python2.7:$C_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=/usr/local/opt/openssl/lib:/usr/local/include:/usr/local/opt/openssl/include:/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/include/python2.7:$CPLUS_INCLUDE_PATH
+
+# also dyld paths
+# export DYLD_LIBRARY_PATH=/usr/local/opt/openssl/include:/usr/local/lib/:/usr/local/opt/lib:$DYLD_LIBRARY_PATH
+export DYLD_FALLBACK_LIBRARY_PATH=$PAHT:/System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/
+
+#########################################################
+# google cloud
+#########################################################
+# The next line updates PATH for the Google Cloud SDK.
+gcpaths='/Users/$(logname)/google-cloud-sdk/path.bash.inc'
+if [ -f $gcpaths ]; then
+  source $gcpaths
+fi
+
+# The next line enables shell command completion for gcloud.
+gccomp='/Users/$(logname)/google-cloud-sdk/completion.bash.inc'
+if [ -f $gccomp ]; then
+  source $gccomp
+fi
+set -u
