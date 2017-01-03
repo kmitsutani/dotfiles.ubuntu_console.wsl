@@ -29,6 +29,10 @@ hook_add = '''
   let g:jedi#popup_select_first = 0
 '''
 
+## Javascript
+repo = 'AtsushiSakai/bookmarklet.vim'
+on_ft = 'javascript'
+
 # markdown
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'

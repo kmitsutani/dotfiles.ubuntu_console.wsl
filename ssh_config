@@ -8,20 +8,19 @@ Host momoiro*,vm*
   IdentityFile ~/.ssh/id_fairy
 
 # inside or outside of FD-network
-Match host momoiro*,vm* exec "test $(curl -s httpbin.org/ip | jq -r '.origin') = '118.240.131.29'"
+Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -ne 0"
   ProxyCommand none
-Match host momoiro*,vm* exec "test $(curl -s httpbin.org/ip | jq -r '.origin') != '118.240.131.29'"
+Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
   ProxyCommand ssh -W %h:%p gateway
 
 # gateway to fd network
 Host gateway
   User mitsutani
-  IdentityFile ~/.ssh/id_fairy
   HostName m13000.fairydevices.jp
 
 Host fd-pothos
-    HostName 192.168.48.80
-    User mitsutani
+  HostName 192.168.48.80
+  User mitsutani
 
 # momoiro cluster
 Host momoiro*

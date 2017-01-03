@@ -38,6 +38,10 @@ repo = 'sudo.vim'
 # Web Service
 #---------------------------
 
+# w3m
+[[plugins]]
+repo = 'yuratomo/w3m.vim'
+
 # esa.io
 repo = 'upamune/esa.vim'
 depends = ['webapi-vim']

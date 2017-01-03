@@ -7,7 +7,7 @@
 . $HOME/.bash_path
 
 # OS dependent setting
-. $HOME/.bash_osdep
+. $HOME/.profile_osdep
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -40,3 +40,5 @@ export DROPBOX="$HOME/Dropbox"
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+
+set +ue

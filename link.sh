@@ -4,7 +4,7 @@ cd $wd
 
 # bash
 ln -s $wd/bash_path $HOME/.bash_path
-ln -s $wd/bash_linux $HOME/.bash_osdep
+ln -s $wd/profile_linux $HOME/.profile_osdep
 ln -s $wd/bash_profile $HOME/.bash_profile
 
 ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
@@ -34,8 +34,9 @@ _tmuxver=$(tmux -V | sed -e 's/[^0-9.]//g')
 if [ $(bc <<< "$_tmuxver > 2.0") -ne 0 ]; then
   ln -s $wd/tmux/mouse-after-2.1.conf $HOME/.tmux/mouse.conf
 else
-  ln -s $wd/tmux/mouse-after-2.0.conf $HOME/.tmux/mouse.conf
+  ln -s $wd/tmux/mouse-before-2.0.conf $HOME/.tmux/mouse.conf
 fi
+unset _tmuxver
 
 # xkb (for X11)
 if [ -d /etc/X11 ]; then
