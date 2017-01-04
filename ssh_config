@@ -2,11 +2,10 @@
 ServerAliveInterval 15
 ServerAliveCountMax 15
 TCPKeepAlive yes
+ForwardAgent yes
 
 # inside or outside of FD-network
-Match host momoiro*,vm* exec "test $(curl -s httpbin.org/ip | jq -r '.origin') = '118.240.131.29'"
-  ProxyCommand none
-Match host momoiro*,vm* exec "test $(curl -s httpbin.org/ip | jq -r '.origin') != '118.240.131.29'"
+Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
   ProxyCommand ssh -W %h:%p gateway
 
 Host home-rpi
@@ -18,6 +17,10 @@ Host home-rpi
 Host gateway
   User mitsutani
   HostName m13000.fairydevices.jp
+
+Host fd-pothos
+  HostName 192.168.48.80
+  User mitsutani
 
 # momoiro cluster
 Host momoiro*
@@ -69,3 +72,5 @@ Host lms-single
 #
 #Host *+*
 #  ProxyCommand ssh -W "$(sed -E 's/.*\+//'<<<"%h")":%p "$(sed -E 's/\+[^\+]*//'<<<"%h")")")")")"
+# inside or outside of FD-network
+#

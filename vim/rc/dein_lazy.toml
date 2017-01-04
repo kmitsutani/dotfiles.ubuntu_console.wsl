@@ -23,7 +23,7 @@ on_source = ['previm']
 
 [[plugins]]
 repo = 'mattn/webapi-vim'
-on_source = ['previm']
+on_source = ['previm', 'esa.vim']
 
 ## Python
 [[plugins]]
@@ -34,6 +34,10 @@ hook_add = '''
   let g:jedi#completions_command = "<C-c>"
   let g:jedi#popup_select_first = 0
 '''
+
+## Javascript
+repo = 'AtsushiSakai/bookmarklet.vim'
+on_ft = 'javascript'
 
 # markdown
 [[plugins]]

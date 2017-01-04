@@ -16,11 +16,6 @@ if [ -d "$HOME/bin" ] ; then
     add2PATH "$HOME/bin"
 fi
 
-## subbins
-if [ -f "$HOME/bin/.subbins" ]; then
-    . "$HOME/bin/.subbins"
-fi
-
 ## paths to add
 paths=""
 paths="$paths\
