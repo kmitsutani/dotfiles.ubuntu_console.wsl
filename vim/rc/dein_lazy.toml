@@ -10,6 +10,12 @@ on_i = 1
 repo = 'kannokanno/previm'
 on_ft = ['mkd', 'md', 'markdown', 'html']
 depends = ['open-browser.vim', 'webapi-vim']
+hook_add = '''
+  nnoremap ； :
+  nnoremap ｗｑ wq
+  nnoremap っｄ dd
+  nnoremap っｙ yy
+'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
