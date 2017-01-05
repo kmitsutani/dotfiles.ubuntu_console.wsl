@@ -4,11 +4,7 @@ cd $wd
 
 # bash
 ln -s $wd/bash_path $HOME/.bash_path
-<<<<<<< HEAD
-ln -s $wd/profile_linux $HOME/.profile_osdep
-=======
 ln -s $wd/bashrc_linux $HOME/.bashrc_osdep
->>>>>>> 9fd631025cf96bb768b6796782bf81ce4a982fa6
 ln -s $wd/bash_profile $HOME/.bash_profile
 
 ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
