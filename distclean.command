@@ -14,4 +14,5 @@ rmdir $HOME/.vim/rc
 rmdir $HOME/.vim
 rm $HOME/.ssh/config
 rm $HOME/.tmux.conf
+rm $HOME/.tmux/mouse.conf
 rm -rf $HOME/.xkb
