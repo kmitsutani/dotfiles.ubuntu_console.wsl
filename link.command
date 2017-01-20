@@ -4,11 +4,10 @@ cd $wd
 
 # bash
 ln -s $wd/bash_path $HOME/.bash_path
-ln -s $wd/bash_mac $HOME/.bash_osdep
 ln -s $wd/bash_profile $HOME/.bash_profile
 
-ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
 ln -s $wd/bashrc $HOME/.bashrc
+ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
 
 # vim
 ln -s $wd/vimrc $HOME/.vimrc

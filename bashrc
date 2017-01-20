@@ -23,7 +23,7 @@ function reprofile(){
 }
 
 # ssh-agent-singlton
-# . $HOME/.bashrc_ssh_agent
+. $HOME/.bashrc_ssh_agent
 
 # osdep bashrc
 [ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep

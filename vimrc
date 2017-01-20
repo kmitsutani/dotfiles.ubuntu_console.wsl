@@ -77,16 +77,15 @@ inoremap ,dt <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
 inoremap ,= =======================================
 
 " remap for ja_JP
-noremap あ a
-noremap い i
-noremap う u
-noremap お o
-noremap っｄ dd
-noremap っｙyy
-noremap ； ;
-noremap ｗ w
-noremap ｑ q
-
+" noremap あ a
+" noremap い i
+" noremap う u
+" noremap お o
+" noremap っｄ dd
+" noremap っｙyy
+" noremap ； ;
+" noremap ｗ w
+" noremap ｑ q
 
 augroup python
   autocmd FileType python set tabstop=4
