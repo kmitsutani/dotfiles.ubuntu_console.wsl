@@ -1,10 +1,9 @@
 # configuration of PATH
 ## add given path to PATH
-. $HOME/.bash_path
+. $HOME/.bash_profile_path
 
 # OS dependent setting
-# ! should change to .profile_osdep
-. $HOME/.bashrc_osdep
+[ -f $HOME/.bash_profile_osdep ] && . $HOME/.bash_profile_osdep
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -25,6 +24,7 @@ if [ -f "/usr/local/bin/virtualenvwrapper.sh" ]; then
     source /usr/local/bin/virtualenvwrapper.sh
     set -u
 fi
+
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
@@ -32,8 +32,6 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 # miscs
-
-export DROPBOX="$HOME/Dropbox"
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"

@@ -4,13 +4,14 @@ ServerAliveCountMax 15
 TCPKeepAlive yes
 ForwardAgent yes
 
-# fd identity file
-Host momoiro*,vm*
-  IdentityFile ~/.ssh/id_fairy
-
 # inside or outside of FD-network
 Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
   ProxyCommand ssh -W %h:%p gateway
+
+Host home-rpi
+  HostName 192.168.0.2
+  User kazuya
+  Port 24842
 
 # gateway to fd network
 Host gateway

@@ -3,4 +3,9 @@ set -eux
 
 gnubindir=$(brew --prefix coreutils)/libexec/gnubin
 
-find $gnubindir -type f
+echo $gnubindir
+find $gnubindir -type f |
+while read command;
+do
+  echo $command
+done

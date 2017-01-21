@@ -3,6 +3,33 @@
 repo = 'Raimondi/delimitMate'
 on_i = 1
 
+# Shougo wares
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+on_i = 1
+hook_add = '''
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  imap <C-s> <Plug>(neosnippet_expand_or_jump)
+  smap <C-s> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-s> <Plug>(neosnippet_expand_or_jump)
+'''
+
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+on_source = ['neosnippet']
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+on_source = ['neosnippet']
+
+[[plugins]]
+repo = 'garbas/vim-snipmate'
+on_source = ['neosnippet']
+
 # on_ft
 
 ## preview
@@ -10,6 +37,12 @@ on_i = 1
 repo = 'kannokanno/previm'
 on_ft = ['mkd', 'md', 'markdown', 'html']
 depends = ['open-browser.vim', 'webapi-vim']
+hook_add = '''
+  nnoremap ； :
+  nnoremap ｗｑ wq
+  nnoremap っｄ dd
+  nnoremap っｙ yy
+'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
