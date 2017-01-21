@@ -4,7 +4,7 @@ let s:isbow = system("[ ! -f $HOME/.isbow ]; echo $?")
 
 " encodings
 if s:isbow
-  set encoding=cp932
+  set encoding=utf-8
   set termencoding=utf-8
 else
   set encoding=utf-8
@@ -75,18 +75,6 @@ inoremap ,d <C-r>=strftime('%Y-%m-%d')<Return>
 inoremap ,t <C-r>=strftime('%H:%M:%S')<Return>
 inoremap ,dt <C-r>=strftime('%Y-%m-%d %H:%M:%S')<Return>
 inoremap ,= =======================================
-
-" remap for ja_JP
-remap あ a
-remap い i
-remap う u
-remap お o
-remap っｄ dd
-remap っｙyy
-noremap ； ;
-noremap ｗ w
-noremap ｑ q
-
 
 augroup python
   autocmd FileType python set tabstop=4
