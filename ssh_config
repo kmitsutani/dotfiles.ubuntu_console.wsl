@@ -21,6 +21,11 @@ Host fd-pothos
   HostName 192.168.48.80
   User mitsutani
 
+Host home-rpi
+  HostName maxwells.daemon.asia
+  Port 24842
+  User kazuya
+
 # momoiro cluster
 Host momoiro*
   User mitsutani
