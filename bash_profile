@@ -13,8 +13,11 @@ export EDITOR=vim
 
 # LL module/package paths
 set +u
-PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-export PYTHONPATH
+if [ $(which pyenv | wc -l) -eq 0 ]; then
+  PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+  export PYTHONPATH
+fi
+
 set -u
 
 # virtualenvwrapper
