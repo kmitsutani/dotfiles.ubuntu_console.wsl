@@ -14,7 +14,7 @@ export EDITOR=vim
 # LL module/package paths
 set +u
 if [ $(which pyenv | wc -l) -eq 0 ]; then
-  PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+  PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
   export PYTHONPATH
 fi
 
