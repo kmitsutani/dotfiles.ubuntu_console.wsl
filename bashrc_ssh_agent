@@ -1,3 +1,18 @@
+# For tmux
+SSH_SOCK_SYMLINK="$HOME/.ssh/auth_sock_symlink"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+  case $SSH_AUTH_SOCK in
+    /tmp/*/agent.[0-9]*)
+      ln -snf "$SSH_AUTH_SOCK" $SSH_SOCK_SYMLINK && export SSH_AUTH_SOCK=$SSH_SOCK_SYMLINK
+  esac
+elif [ -S $SSH_SOCK_SYMLINK ]; then
+  export SSH_AUTH_SOCK=$SSH_SOCK_SYMLINK
+else
+  echo "no ssh-agent"
+fi
+
+# To avoid duplicated activation
+# Source SSH settings, if applicable
 SSH_ENV="${HOME}/.ssh_environment"
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
@@ -13,8 +28,6 @@ function start_agent {
     fi
 }
 
-# Source SSH settings, if applicable
-
 if [ -f "${SSH_ENV}" ]; then
   . "${SSH_ENV}" >/dev/null
   cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' | grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
@@ -26,3 +39,4 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
+
