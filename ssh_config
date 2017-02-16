@@ -42,29 +42,14 @@ Host lxc-*
 Host lms-*
   User ubuntu
 
-Host vm01
-  HostName 192.168.48.26
-
 Host vm04
   HostName 192.168.48.28
 
-Host vm04-lms2
-  HostName 192.168.48.81
+Host vm02
+  HostName 192.168.48.119
 
 Host vm05
-  HostName 192.168.48.76
-
-Host lxc-lms2
-  HostName 192.168.48.81
-
-Host lms-multi1
-  HostName 192.168.48.63
-
-Host lms-multi8
-  HostName 192.168.48.75
-
-Host lms-single
-  HostName 192.168.48.71
+  HostName 192.168.48.118
 
 # General Multiple Port-forwarding (http://qiita.com/kawaz/items/a0151d3aa2b6f9c4b3b8)
 #Host */*
