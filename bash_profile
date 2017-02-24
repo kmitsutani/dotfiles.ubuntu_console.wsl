@@ -3,7 +3,7 @@
 . $HOME/.bash_profile_path
 
 # OS dependent setting
-[ -f $HOME/.bash_profile_osdep ] && . $HOME/.bash_profile_osdep
+[ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -13,17 +13,12 @@ export EDITOR=vim
 
 # LL module/package paths
 set +u
-PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-export PYTHONPATH
-set -u
-
-# virtualenvwrapper
-if [ -f "/usr/local/bin/virtualenvwrapper.sh" ]; then
-    set +u
-    export WORKON_HOME=$HOME/.virtualenvs
-    source /usr/local/bin/virtualenvwrapper.sh
-    set -u
+if [ $(which pyenv | wc -l) -eq 0 ]; then
+  PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
+  export PYTHONPATH
 fi
+
+set -u
 
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
