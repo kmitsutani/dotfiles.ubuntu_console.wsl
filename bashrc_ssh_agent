@@ -15,27 +15,40 @@ function start_agent {
     fi
 }
 
-if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" >/dev/null
-  cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' | grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
-  [ $cnt -eq 0 ] && start_agent;
-  
-  if [[ -z `ssh-add -l | grep "${HOME}/.ssh/id_"` ]]; then
-    ssh-add $HOME/.ssh/id_*
+function sshagent_singleton {
+  if [ ! -z `find ${HOME}/.ssh -name "id_*" | wc -l` ]; then
+    echo "This is not a  client machine. skip duplication check."
+    return
   fi
-else
-    start_agent;
-fi
+  if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" >/dev/null
+    cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' | grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
+    if [ $cnt -eq 0 ]; then
+      echo 'no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent.'
+      start_agent;
+    fi
+    
+    if [[ -z `ssh-add -l | grep "${HOME}/.ssh/id_"` ]]; then
+      ssh-add $HOME/.ssh/id_*
+    fi
+  else
+      start_agent;
+  fi
+}
 
-# for tmux
-agent="$HOME/.ssh/agent"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-    /tmp/*/agent.[0-9]*)
-        ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
-elif [ -S $agent ]; then
-    export SSH_AUTH_SOCK=$agent
-else
-    echo "no ssh-agent"
-fi
+function agentsock_symlink {
+  agent="$HOME/.ssh/agent"
+  if [ -S "$SSH_AUTH_SOCK" ]; then
+      case $SSH_AUTH_SOCK in
+      /tmp/*/agent.[0-9]*)
+          ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+      esac
+  elif [ -S $agent ]; then
+      export SSH_AUTH_SOCK=$agent
+  else
+      echo "no ssh-agent"
+  fi
+}
+
+sshagent_singleton
+agentsock_symlink
