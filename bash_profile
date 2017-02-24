@@ -20,14 +20,6 @@ fi
 
 set -u
 
-# virtualenvwrapper
-if [ -f "/usr/local/bin/virtualenvwrapper.sh" ]; then
-    set +u
-    export WORKON_HOME=$HOME/.virtualenvs
-    source /usr/local/bin/virtualenvwrapper.sh
-    set -u
-fi
-
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
