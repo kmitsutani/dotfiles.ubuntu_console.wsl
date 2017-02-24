@@ -17,7 +17,7 @@ function start_agent {
 
 function sshagent_singleton {
   if [ ! -z `find ${HOME}/.ssh -name "id_*" | wc -l` ]; then
-    echo "This is not a  client machine. skip duplication check."
+    echo "ssh-agent-singleton: not a client machine. skip."
     return
   fi
   if [ -f "${SSH_ENV}" ]; then
