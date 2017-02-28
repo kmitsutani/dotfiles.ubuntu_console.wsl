@@ -4,6 +4,7 @@
 
 # OS dependent setting
 [ -f $HOME/.bash_profile_osdep ] && . $HOME/.bash_profile_osdep
+[ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
 
 export XDG_CONFIG_HOME=$HOME/.config
 
