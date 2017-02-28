@@ -31,5 +31,8 @@ function reprofile(){
 # machine dependent bashrc
 [ -f $HOME/.bashrc_machine ] && . $HOME/.bashrc_machine
 
+# dircolors
+[ -f $HOME/.dircolors ] && eval $(dircolors $HOME/.dircolors -b)
+
 # Pythonbrew
 [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
