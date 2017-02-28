@@ -3,8 +3,8 @@ wd=$(cd $(dirname $0); pwd)
 cd $wd
 
 # bash
-ln -s $wd/bash_profile_path $HOME/.bash_profile_path
 ln -s $wd/bash_profile $HOME/.bash_profile
+ln -s $wd/bash_profile_path $HOME/.bash_profile_path
 
 ln -s $wd/bashrc $HOME/.bashrc
 ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
