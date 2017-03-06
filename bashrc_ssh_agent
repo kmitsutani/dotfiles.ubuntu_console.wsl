@@ -37,18 +37,22 @@ function sshagent_singleton {
   fi
 }
 
+: <<'#__symlink__'
 function agentsock_symlink {
   if [ -S "$SSH_AUTH_SOCK" ]; then
-      case $SSH_AUTH_SOCK in
+    case $SSH_AUTH_SOCK in
       /tmp/*/agent.[0-9]*)
           ln -snf "$SSH_AUTH_SOCK" ${SSHAGENT_SYMLINK} && export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
-      esac
+    esac
   elif [ -S ${SSHAGENT_SYMLINK} ]; then
-      export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+    echo "A socket ${SSHAGENT_SYMLINK} found."
+    echo "set SSH_AUTH_SOCK to ${SSHAGENT_SYMLINK} "
+    export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
   else
       echo "no ssh-agent"
   fi
 }
+#__symlink__
 
 sshagent_singleton
-#agentsock_symlink
+# agentsock_symlink
