@@ -42,10 +42,15 @@ function agentsock_symlink {
     case $SSH_AUTH_SOCK in
       /tmp/*/agent.[0-9]*)
         echo "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}. use it." 
-        ln -snf "$SSH_AUTH_SOCK" ${SSHAGENT_SYMLINK} && export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+        ln -snf "$SSH_AUTH_SOCK" ${SSHAGENT_SYMLINK}
+        export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+        ;;
+      "${SSHAGENT_SYMLINK}")
+        echo "ssh-agent socket is already fixed. do nothing."
+        ;;
     esac
   elif [ -S ${SSHAGENT_SYMLINK} ]; then
-    echo "A socket ${SSHAGENT_SYMLINK} found."
+    echo "a ssh-agent socket found ${SSHAGENT_SYMLINK}."
     echo "set SSH_AUTH_SOCK to ${SSHAGENT_SYMLINK} "
     export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
   else
