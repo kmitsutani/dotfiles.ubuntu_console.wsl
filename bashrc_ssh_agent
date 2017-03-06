@@ -41,7 +41,8 @@ function agentsock_symlink {
   if [ -S "$SSH_AUTH_SOCK" ]; then
     case $SSH_AUTH_SOCK in
       /tmp/*/agent.[0-9]*)
-          ln -snf "$SSH_AUTH_SOCK" ${SSHAGENT_SYMLINK} && export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+        echo "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}. use it." 
+        ln -snf "$SSH_AUTH_SOCK" ${SSHAGENT_SYMLINK} && export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
     esac
   elif [ -S ${SSHAGENT_SYMLINK} ]; then
     echo "A socket ${SSHAGENT_SYMLINK} found."
