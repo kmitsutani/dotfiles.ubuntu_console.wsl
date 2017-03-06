@@ -37,7 +37,6 @@ function sshagent_singleton {
   fi
 }
 
-: <<'#__symlink__'
 function agentsock_symlink {
   if [ -S "$SSH_AUTH_SOCK" ]; then
     case $SSH_AUTH_SOCK in
@@ -52,7 +51,6 @@ function agentsock_symlink {
       echo "no ssh-agent"
   fi
 }
-#__symlink__
 
 sshagent_singleton
-# agentsock_symlink
+agentsock_symlink
