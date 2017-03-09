@@ -54,7 +54,7 @@ function agentsock_symlink {
     echo "set SSH_AUTH_SOCK to ${SSHAGENT_SYMLINK} "
     export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
   else
-      echo "no ssh-agent"
+      echo "ssh-agent-symlink: no socket found."
   fi
 }
 

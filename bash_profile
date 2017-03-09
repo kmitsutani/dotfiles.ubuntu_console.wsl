@@ -2,7 +2,7 @@
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
-# OS dependent setting
+# machine dependent setting
 [ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
 
 export XDG_CONFIG_HOME=$HOME/.config
@@ -19,6 +19,9 @@ if [ $(which pyenv | wc -l) -eq 0 ]; then
 fi
 
 set -u
+
+# ssh-agent
+. .profile_ssh_agent
 
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
