@@ -21,7 +21,7 @@ fi
 set -u
 
 # ssh-agent
-. .profile_ssh_agent
+. $HOME/.profile_ssh_agent
 
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -32,6 +32,7 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # miscs
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
-[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+# [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
 
+export _SOURCE_PROFILE=1
 set +ue
