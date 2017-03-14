@@ -3,7 +3,9 @@
 . $HOME/.bash_profile_path
 
 # machine dependent setting
+set +eu
 [ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
+set -eu
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -32,7 +34,6 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # miscs
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
-# [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
 
 export _SOURCE_PROFILE=1
-set +ue
+set +uex
