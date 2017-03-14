@@ -14,6 +14,9 @@ function start_agent {
     if [ $(find ${HOME}/.ssh -name "id_*" | wc -l) -gt 0 ]; then
       ssh-add $HOME/.ssh/id_*
     fi
+    if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
+      ssh-add ${HOME}/.ssh/google_compute_engine
+    fi
 }
 
 function sshagent_singleton {
