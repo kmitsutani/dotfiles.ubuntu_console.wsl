@@ -20,7 +20,7 @@ function start_agent {
 }
 
 function sshagent_singleton {
-  if [ ! -z `find ${HOME}/.ssh -name "id_*" | wc -l` ]; then
+  if [ ! -z `find ${HOME}/.ssh -name "id_*"` ]; then
     echo "ssh-agent-singleton: not a client machine. skip."
     return
   fi
