@@ -22,9 +22,6 @@ function reprofile(){
     source ~/.bash_profile
 }
 
-# ssh-agent-singlton
-. $HOME/.bashrc_ssh_agent
-
 # osdep bashrc
 [ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep
 
@@ -36,3 +33,4 @@ function reprofile(){
 
 # Pythonbrew
 [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+set +eux

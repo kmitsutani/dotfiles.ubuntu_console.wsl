@@ -2,8 +2,10 @@
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
-# OS dependent setting
+# machine dependent setting
+set +eu
 [ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
+set -eu
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -20,6 +22,9 @@ fi
 
 set -u
 
+# ssh-agent
+. $HOME/.profile_ssh_agent
+
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
@@ -29,6 +34,6 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # miscs
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
-[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
 
-set +ue
+export _SOURCE_PROFILE=1
+set +uex
