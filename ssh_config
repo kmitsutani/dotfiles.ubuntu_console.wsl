@@ -5,7 +5,7 @@ TCPKeepAlive yes
 ForwardAgent yes
 
 # inside or outside of FD-network
-Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
+Match host fd-*,momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
   ProxyCommand ssh -W %h:%p gateway
 
 Host home-rpi
@@ -22,9 +22,18 @@ Host fd-pothos
   HostName 192.168.48.80
   User mitsutani
 
+Host fd-macbook
+  User mitsutani
+  HostName 192.168.48.32
+
 Host home-rpi
   HostName maxwells.daemon.asia
   Port 24842
+  User kazuya
+
+Host home-win
+  HostName alianware.bricomplex.jp
+  Port 22
   User kazuya
 
 # momoiro cluster
