@@ -14,10 +14,13 @@ function start_agent {
     if [ $(find ${HOME}/.ssh -name "id_*" | wc -l) -gt 0 ]; then
       ssh-add $HOME/.ssh/id_*
     fi
+    if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
+      ssh-add ${HOME}/.ssh/google_compute_engine
+    fi
 }
 
 function sshagent_singleton {
-  if [ ! -z `find ${HOME}/.ssh -name "id_*" | wc -l` ]; then
+  if [ `find ${HOME}/.ssh -name "id_*" | wc -l` -eq 0 ]; then
     echo "ssh-agent-singleton: not a client machine. skip."
     return
   fi

@@ -12,7 +12,7 @@ else
 endif
 
 scriptencoding utf-8
-set fileencodings=ucs-boms,utf-8,iso-2022-jp,cp932,euc-jp,default,latin
+set fileencodings=utf-8,iso-2022-jp,cp932,euc-jp,default,latin
 set fileformats=unix,dos,mac
 set ambiwidth=double
 set fileencoding=utf-8
