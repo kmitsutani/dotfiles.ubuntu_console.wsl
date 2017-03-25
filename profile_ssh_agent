@@ -1,0 +1,65 @@
+# To avoid duplicated activation
+# Source SSH settings, if applicable
+SSH_ENV="${HOME}/.ssh_environment"
+SSHAGENT_SYMLINK="${HOME}/.ssh/agent"
+SSHAGENT=/usr/bin/ssh-agent
+SSHAGENTARGS="-s"
+
+function start_agent {
+  echo -n "Initialising new SSH agent ... "
+    ${SSHAGENT} ${SSHAGENTARGS} >"${SSH_ENV}"
+    echo "succeeded!"
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}"
+    if [ $(find ${HOME}/.ssh -name "id_*" | wc -l) -gt 0 ]; then
+      ssh-add $HOME/.ssh/id_*
+    fi
+    if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
+      ssh-add ${HOME}/.ssh/google_compute_engine
+    fi
+}
+
+function sshagent_singleton {
+  if [ `find ${HOME}/.ssh -name "id_*" | wc -l` -eq 0 ]; then
+    echo "ssh-agent-singleton: not a client machine. skip."
+    return
+  fi
+  if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" >/dev/null
+    cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' | grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
+    if [ $cnt -eq 0 ]; then
+      echo 'no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent.'
+      start_agent;
+    fi
+    
+    if [[ -z `ssh-add -l | grep "${HOME}/.ssh/id_"` ]]; then
+      ssh-add $HOME/.ssh/id_*
+    fi
+  else
+      start_agent;
+  fi
+}
+
+function agentsock_symlink {
+  if [ -S "$SSH_AUTH_SOCK" ]; then
+    case $SSH_AUTH_SOCK in
+      /tmp/*/agent.[0-9]*)
+        echo "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}. use it." 
+        ln -snf "$SSH_AUTH_SOCK" ${SSHAGENT_SYMLINK}
+        export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+        ;;
+      "${SSHAGENT_SYMLINK}")
+        echo "ssh-agent socket is already fixed. do nothing."
+        ;;
+    esac
+  elif [ -S ${SSHAGENT_SYMLINK} ]; then
+    echo "a ssh-agent socket found ${SSHAGENT_SYMLINK}."
+    echo "set SSH_AUTH_SOCK to ${SSHAGENT_SYMLINK} "
+    export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+  else
+      echo "ssh-agent-symlink: no socket found."
+  fi
+}
+
+sshagent_singleton
+agentsock_symlink
