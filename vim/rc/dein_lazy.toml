@@ -63,6 +63,7 @@ hook_add = '''
 '''
 
 ## Javascript
+[[plugins]]
 repo = 'AtsushiSakai/bookmarklet.vim'
 on_ft = 'javascript'
 
