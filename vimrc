@@ -67,6 +67,8 @@ map <F18> <Nop>
 map <F19> <Nop>
 map <S-F6> <Nop>
 map <S-F7> <Nop>
+noremap : ;
+noremap ; :
 noremap <C-c> <Nop>
 noremap ; :
 noremap : ;
