@@ -8,6 +8,11 @@ ForwardAgent yes
 Match host fd-*,momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
   ProxyCommand ssh -W %h:%p gateway
 
+Host gist.github.com
+  HostName gist.github.com
+  User mitsutani-FD
+  IdentityFile ~/.ssh/id_fairy
+
 Host home-rpi
   HostName 192.168.0.2
   User kazuya
