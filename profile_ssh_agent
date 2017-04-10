@@ -52,16 +52,25 @@ function fix_auth_sock {
         ln -snf "$SSH_AUTH_SOCK" ${AUTHSOCK_SYMLINK}
         export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
         ;;
-      "${SSHAGENT_SYMLINK}")
+      "${AUTHSOCK_SYMLINK}")
         echo "[$funcname] INFO: ssh-agent authentication socket is already fixed. do nothing."
         ;;
     esac
-  elif [ -S ${SSHAGENT_SYMLINK} ]; then
-    echo "[$funcname] INFO: a ssh-agent socket found ${SSHAGENT_SYMLINK}."
-    echo "[$funcname] INFO: set SSH_AUTH_SOCK to ${SSHAGENT_SYMLINK} "
-    export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+  elif [ -S ${AUTHSOCK_SYMLINK} ]; then
+    echo "[$funcname] INFO: a ssh-agent socket found ${AUTHSOCK_SYMLINK}."
+    echo "[$funcname] INFO: set SSH_AUTH_SOCK to ${AUTHSOCK_SYMLINK} "
+    export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
   else
+    echo "[$funcname] INFO: ${AUTHSOCK_SYMLINK} found but link is dead..."
+    newsocket=$(find /tmp -name "agent.*")
+    if [ ! -z "${newsocket}" ]; then
+      echo "[$funcname] INFO: new socket found at '${newsocket}'."
+      echo "[$funcname] INFO: re-linked it to ${AUTHSOCK_SYMLINK}"
+      ln -snf $newsocket ${AUTHSOCK_SYMLINK}
+      export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
+    else
       echo "[$funcname] ERROR: no socket found."
+    fi
   fi
 }
 
