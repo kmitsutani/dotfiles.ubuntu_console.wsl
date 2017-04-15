@@ -33,4 +33,5 @@ function reprofile(){
 
 # Pythonbrew
 [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
-set +eux
+
+HISTTIMEFORMAT='200~%Y-%m-%d %T '
