@@ -62,7 +62,7 @@ function fix_auth_sock {
     export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
   else
     echo "[$funcname] INFO: ${AUTHSOCK_SYMLINK} found but link is dead..."
-    newsocket=$(find /tmp -name "agent.*")
+    newsocket=$(find /tmp/ssh* -name "agent.*")
     if [ ! -z "${newsocket}" ]; then
       echo "[$funcname] INFO: new socket found at '${newsocket}'."
       echo "[$funcname] INFO: re-linked it to ${AUTHSOCK_SYMLINK}"
