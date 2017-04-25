@@ -3,11 +3,11 @@ wd=$(cd $(dirname $0); pwd)
 cd $wd
 
 # bash
-ln -s $wd/bash_path $HOME/.bash_path
 ln -s $wd/bashrc_linux $HOME/.bashrc_osdep
 ln -s $wd/bash_profile $HOME/.bash_profile
+ln -s $wd/bash_profile_path $HOME/.bash_profile_path
 
-ln -s $wd/bashrc_ssh_agent $HOME/.bashrc_ssh_agent
+ln -s $wd/profile_ssh_agent $HOME/.profile_ssh_agent
 if [ -f $HOME/.bashrc ]; then
   mv $HOME/.bashrc $HOME/.bashrc_old
   ln -s $wd/bashrc $HOME/.bashrc

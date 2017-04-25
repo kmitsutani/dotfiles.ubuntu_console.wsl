@@ -34,10 +34,10 @@ unset paths
 unset path
 
 ## trim doubling
-#LF=$(printf '\\\012_') 
-#LF=${LF%_} 
-#PATH=$(echo $PATH | sed -e "s/:/$LF/g" | sort -r | uniq | perl -pe 's/\n/:/g;')
-#PATH=${PATH:1:$((${#PATH} - 2))}
+# LF=$(printf '\\\012_') 
+# LF=${LF%_} 
+# PATH=$(echo $PATH | sed -e "s/:/$LF/g" | sort -r | uniq | perl -pe 's/\n/:/g;')
+# PATH=${PATH:1:$((${#PATH} - 2))}
+# unset LF
 
-unset LF
 export PATH
