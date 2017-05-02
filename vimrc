@@ -48,6 +48,9 @@ set cursorline " カーソルラインをハイライト"
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
 
+" clipboard
+set clipboard=unnamed,autoselect
+
 " off indent when paste from buffer
 if &term =~ "xterm"
   let &t_SI .= "\e[?2004h"
@@ -67,8 +70,8 @@ map <F18> <Nop>
 map <F19> <Nop>
 map <S-F6> <Nop>
 map <S-F7> <Nop>
-" noremap : ;
-" noremap ; :
+noremap : ;
+noremap ; :
 noremap <C-c> <Nop>
 imap <Nul> <Nop>
 inoremap ,d <C-r>=strftime('%Y-%m-%d')<Return>
@@ -86,4 +89,9 @@ source ~/.vimrc_dein
 
 if !&compatible
   set nocompatible
+endif
+
+if has('gui_macmvim')
+  source ~/_gvimrc 
+  let g:vimrc_local_finish = 1
 endif
