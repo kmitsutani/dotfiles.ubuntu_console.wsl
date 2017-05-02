@@ -1,7 +1,7 @@
 # To avoid duplicated activation
 # Source SSH settings, if applicable
 SSH_ENV="${HOME}/.ssh_environment"
-SSHAGENT_SYMLINK="${HOME}/.ssh/agent"
+AUTHSOCK_SYMLINK="${HOME}/.ssh/auth_sock"
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
 
@@ -20,15 +20,17 @@ function start_agent {
 }
 
 function sshagent_singleton {
+  funcname="ssh-agent-singleton"
   if [ `find ${HOME}/.ssh -name "id_*" | wc -l` -eq 0 ]; then
-    echo "ssh-agent-singleton: not a client machine. skip."
+    echo "[$funcname] INFO: not a client machine. skip;"
     return
   fi
   if [ -f "${SSH_ENV}" ]; then
     . "${SSH_ENV}" >/dev/null
-    cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' | grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
+    cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' |\
+          grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
     if [ $cnt -eq 0 ]; then
-      echo 'no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent.'
+      echo "[$funcname] no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent;"
       start_agent;
     fi
     
@@ -40,26 +42,37 @@ function sshagent_singleton {
   fi
 }
 
-function agentsock_symlink {
+function fix_auth_sock {
+  funcname="ssh-agent-fix-auth-sock"
   if [ -S "$SSH_AUTH_SOCK" ]; then
     case $SSH_AUTH_SOCK in
       /tmp/*/agent.[0-9]*)
-        echo "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}. use it." 
-        ln -snf "$SSH_AUTH_SOCK" ${SSHAGENT_SYMLINK}
-        export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+        echo "[$funcname] INFO: SSH_AUTH_SOCK=${SSH_AUTH_SOCK};"
+        echo "[$funcname] INFO: link it to ${AUTHSOCK_SYMLINK} and re-export;" 
+        ln -snf "$SSH_AUTH_SOCK" ${AUTHSOCK_SYMLINK}
+        export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
         ;;
-      "${SSHAGENT_SYMLINK}")
-        echo "ssh-agent socket is already fixed. do nothing."
+      "${AUTHSOCK_SYMLINK}")
+        echo "[$funcname] INFO: ssh-agent authentication socket is already fixed. do nothing."
         ;;
     esac
-  elif [ -S ${SSHAGENT_SYMLINK} ]; then
-    echo "a ssh-agent socket found ${SSHAGENT_SYMLINK}."
-    echo "set SSH_AUTH_SOCK to ${SSHAGENT_SYMLINK} "
-    export SSH_AUTH_SOCK=${SSHAGENT_SYMLINK}
+  elif [ -S ${AUTHSOCK_SYMLINK} ]; then
+    echo "[$funcname] INFO: a ssh-agent socket found ${AUTHSOCK_SYMLINK}."
+    echo "[$funcname] INFO: set SSH_AUTH_SOCK to ${AUTHSOCK_SYMLINK} "
+    export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
   else
-      echo "ssh-agent-symlink: no socket found."
+    echo "[$funcname] INFO: ${AUTHSOCK_SYMLINK} found but link is dead..."
+    newsocket=$(find /tmp/ssh* -name "agent.*")
+    if [ ! -z "${newsocket}" ]; then
+      echo "[$funcname] INFO: new socket found at '${newsocket}'."
+      echo "[$funcname] INFO: re-linked it to ${AUTHSOCK_SYMLINK}"
+      ln -snf $newsocket ${AUTHSOCK_SYMLINK}
+      export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
+    else
+      echo "[$funcname] ERROR: no socket found."
+    fi
   fi
 }
 
 sshagent_singleton
-agentsock_symlink
+fix_auth_sock
