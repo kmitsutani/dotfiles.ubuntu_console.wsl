@@ -3,9 +3,12 @@ wd=$(cd $(dirname $0); pwd)
 cd $wd
 
 rm $HOME/.bash_path
+rm $HOME/.bash_profile_path
 rm $HOME/.bash_profile
+rm $HOME/.bashrc_osdep
 rm $HOME/.bashrc
 rm $HOME/.bashrc_ssh_agent
+rm $HOME/.profile_ssh_agent
 rm $HOME/.vimrc
 rm $HOME/.vimrc_dein
 rm $HOME/.vim/rc/dein.toml
