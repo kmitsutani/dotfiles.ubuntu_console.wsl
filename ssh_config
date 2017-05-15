@@ -57,6 +57,7 @@ Host fd-docmit
 
 Host fd-lxc
   HostName 192.168.48.119
+  User ubuntu
 
 # General Multiple Port-forwarding (http://qiita.com/kawaz/items/a0151d3aa2b6f9c4b3b8)
 #Host */*
