@@ -22,6 +22,9 @@ function reprofile(){
     source ~/.bash_profile
 }
 
+# record time stamp to history
+HISTTIMEFORMAT='%Y-%m-%dT%T%z '
+
 # osdep bashrc
 [ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep
 
