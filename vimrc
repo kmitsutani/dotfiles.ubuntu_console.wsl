@@ -73,6 +73,8 @@ map <S-F7> <Nop>
 noremap : ;
 noremap ; :
 noremap <C-c> <Nop>
+noremap ; :
+noremap : ;
 imap <Nul> <Nop>
 inoremap ,d <C-r>=strftime('%Y-%m-%d')<Return>
 inoremap ,t <C-r>=strftime('%H:%M:%S')<Return>
