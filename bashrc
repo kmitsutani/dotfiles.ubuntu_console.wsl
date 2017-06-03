@@ -22,14 +22,17 @@ function reprofile(){
     source ~/.bash_profile
 }
 
-# ssh-agent-singlton
-# . $HOME/.bashrc_ssh_agent
+# record time stamp to history
+HISTTIMEFORMAT='%Y-%m-%d %T '
 
 # osdep bashrc
 [ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep
 
 # machine dependent bashrc
 [ -f $HOME/.bashrc_machine ] && . $HOME/.bashrc_machine
+
+# dircolors
+[ -f $HOME/.dircolors ] && eval $(dircolors $HOME/.dircolors -b)
 
 # Pythonbrew
 [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"

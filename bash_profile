@@ -1,10 +1,9 @@
 # configuration of PATH
 ## add given path to PATH
-. $HOME/.bash_path
+. $HOME/.bash_profile_path
 
-# OS dependent setting
-# ! should change to .profile_osdep
-. $HOME/.bashrc_osdep
+# machine dependent setting
+[ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -13,18 +12,14 @@ export LANG=en_US.UTF-8
 export EDITOR=vim
 
 # LL module/package paths
-set +u
-PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-export PYTHONPATH
-set -u
-
-# virtualenvwrapper
-if [ -f "/usr/local/bin/virtualenvwrapper.sh" ]; then
-    set +u
-    export WORKON_HOME=$HOME/.virtualenvs
-    source /usr/local/bin/virtualenvwrapper.sh
-    set -u
+if [ $(which pyenv | wc -l) -eq 0 ]; then
+  PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
+  export PYTHONPATH
 fi
+
+# ssh-agent
+. $HOME/.profile_ssh_agent
+
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
@@ -33,9 +28,8 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 # miscs
 
-export DROPBOX="$HOME/Dropbox"
-
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
-[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
 
-set +ue
+export _SOURCE_PROFILE=1
+
+. $HOME/.bashrc

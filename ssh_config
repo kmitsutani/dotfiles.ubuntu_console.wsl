@@ -5,13 +5,23 @@ TCPKeepAlive yes
 ForwardAgent yes
 
 # inside or outside of FD-network
-Match host momoiro*,vm* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
+Match host fd* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"
   ProxyCommand ssh -W %h:%p gateway
 
+Host gist.github.com
+  HostName gist.github.com
+  User mitsutani-fd
+  IdentityFile ~/.ssh/id_fairy
+
 Host home-rpi
-  HostName 192.168.0.2
+  HostName maxwells.daemon.asia
   User kazuya
   Port 24842
+
+Host home-win
+  HostName alianware
+  Port 22
+  User kazuya
 
 # gateway to fd network
 Host gateway
@@ -22,49 +32,32 @@ Host fd-pothos
   HostName 192.168.48.80
   User mitsutani
 
+Host fd-macbook
+  User mitsutani
+  HostName 192.168.48.32
+
 # momoiro cluster
-Host momoiro*
+Host fd-momoiro*
   User mitsutani
 
-Host momoiro01
+Host fd-momoiro01
   HostName 192.168.48.53
 
-Host momoiro02
+Host fd-momoiro02
   HostName 192.168.48.34
 
 # lxc-containers
-Host vm*
+Host fd-doc
+  HostName 192.168.48.107
+  User docadmin
+
+Host fd-docmit
+  HostName 192.168.48.107
+  User mitsutani
+
+Host fd-lxc
+  HostName 192.168.48.119
   User ubuntu
-
-Host lxc-*
-  User ubuntu
-
-Host lms-*
-  User ubuntu
-
-Host vm01
-  HostName 192.168.48.26
-
-Host vm04
-  HostName 192.168.48.28
-
-Host vm04-lms2
-  HostName 192.168.48.81
-
-Host vm05
-  HostName 192.168.48.76
-
-Host lxc-lms2
-  HostName 192.168.48.81
-
-Host lms-multi1
-  HostName 192.168.48.63
-
-Host lms-multi8
-  HostName 192.168.48.75
-
-Host lms-single
-  HostName 192.168.48.71
 
 # General Multiple Port-forwarding (http://qiita.com/kawaz/items/a0151d3aa2b6f9c4b3b8)
 #Host */*
