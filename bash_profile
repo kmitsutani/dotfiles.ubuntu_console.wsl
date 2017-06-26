@@ -1,3 +1,5 @@
+# Flag
+export _BASHPROFILE_SOURCED=1
 # configuration of PATH
 ## add given path to PATH
 . $HOME/.bash_profile_path
@@ -30,6 +32,7 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
-export _SOURCE_PROFILE=1
-
-. $HOME/.bashrc
+echo $_BASHRC_SOURCED
+if [ "x$_BASHRC_SOURCED" != "x1" ]; then
+  . $HOME/.bashrc
+fi
