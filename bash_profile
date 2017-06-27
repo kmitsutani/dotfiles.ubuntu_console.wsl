@@ -30,9 +30,6 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 # miscs
 
-[ -f "$HOME/.profile" ] && . "$HOME/.profile"
-
-echo $_BASHRC_SOURCED
-if [ "x$_BASHRC_SOURCED" != "x1" ]; then
-  . $HOME/.bashrc
+if [ "x$_PROFILE_SOURCED" != "x1" ] && [ -f "$HOME/.profile" ]; then
+  . "$HOME/.profile"
 fi

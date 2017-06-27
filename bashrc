@@ -1,9 +1,6 @@
 # source .bash_profile if not .bash_profile is not sourced
 # Flag
 export _BASHRC_SOURCED=1
-if [ "x$_BASHPROFILE_SOURCED" != "x1" ]; then
-  . $HOME/.bash_profile
-fi
 
 # aliases
 if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
