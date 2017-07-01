@@ -1,3 +1,6 @@
 #!/bin/bash
 DIR=$(cd $(dirname $0); pwd)
-xkbcomp -I$DIR $DIR/keymap $DISPLAY >/tmp/$(logname)-xkbcomp.log 2>&1
+logfile=/tmp/$(logname)-xkbcomp.log
+echo "$(date +"%Y-%m-%d %T") xkbcomp -I$DIR $DIR/keymap $DISPLAY">> $logfile
+xkbcomp -I$DIR $DIR/keymap $DISPLAY >>$logfile 2>&1
+[ $? -ne 0 ] && echo "return code is not 0. see $logfile"
