@@ -19,9 +19,6 @@ if [ $(which pyenv | wc -l) -eq 0 ]; then
   export PYTHONPATH
 fi
 
-# ssh-agent
-. $HOME/.profile_ssh_agent
-
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
