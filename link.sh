@@ -3,7 +3,6 @@ wd=$(cd $(dirname $0); pwd)
 cd $wd
 
 # bash
-ln -s $wd/bashrc_linux $HOME/.bashrc_osdep
 ln -s $wd/bash_profile $HOME/.bash_profile
 ln -s $wd/bash_profile_path $HOME/.bash_profile_path
 

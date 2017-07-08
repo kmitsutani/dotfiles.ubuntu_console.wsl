@@ -4,6 +4,7 @@ SSH_ENV="${HOME}/.ssh_environment"
 AUTHSOCK_SYMLINK="${HOME}/.ssh/auth_sock"
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
+whoami
 
 function start_agent {
   echo -n "Initialising new SSH agent ... "
@@ -62,7 +63,7 @@ function fix_auth_sock {
     export SSH_AUTH_SOCK=${AUTHSOCK_SYMLINK}
   else
     echo "[$funcname] INFO: ${AUTHSOCK_SYMLINK} found but link is dead..."
-    newsocket=$(find /tmp -name "agent.*")
+    newsocket=$(find /tmp/ssh* -name "agent.*")
     if [ ! -z "${newsocket}" ]; then
       echo "[$funcname] INFO: new socket found at '${newsocket}'."
       echo "[$funcname] INFO: re-linked it to ${AUTHSOCK_SYMLINK}"

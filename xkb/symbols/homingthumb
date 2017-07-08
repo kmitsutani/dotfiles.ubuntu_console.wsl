@@ -3,8 +3,8 @@ default xkb_symbols "homingthumb" {
     key <MUHE> { [ Hyper_L ] };
     key <HENK> { [ Hyper_R ] };
 
-  key.type = "THUMB_THREE_LEVEL";
-    key <SPCE> { [ space, Return, Escape ] };
+  key.type = "THUMB_FOUR_LEVEL";
+    key <SPCE> { [ space, Zenkaku_Hankaku ,Return, Escape ] };
 
   key.type = "MHNKN_FOUR_LEVEL";
     key <AD08> { [ i, I, bracketleft, braceleft	] };

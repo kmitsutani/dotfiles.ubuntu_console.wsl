@@ -1,3 +1,7 @@
+# source .bash_profile if not .bash_profile is not sourced
+# Flag
+export _BASHRC_SOURCED=1
+
 # aliases
 if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
     alias ls='ls --color=auto'
@@ -21,6 +25,12 @@ function hyperthumb(){
 function reprofile(){
     source ~/.bash_profile
 }
+
+# ssh-agent
+. $HOME/.sshrc
+
+# record time stamp to history
+HISTTIMEFORMAT='%Y-%m-%d %T '
 
 # osdep bashrc
 [ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep
