@@ -44,10 +44,7 @@ HISTTIMEFORMAT='%Y-%m-%d %T '
 # Pythonbrew
 [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
 
-<<<<<<< HEAD
 [ ! -z "$TMUX" ] && . $HOME/.bash_profile
 
 export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \[\033[00m\]\n[\d \t]\$ "
-=======
 HISTTIMEFORMAT='200~%Y-%m-%d %T '
->>>>>>> 0ff5ea997c4b52ee6fe452cce79a95a49079cee1
