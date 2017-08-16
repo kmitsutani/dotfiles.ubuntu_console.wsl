@@ -19,6 +19,8 @@ default xkb_types "thumbtypes" {
     map[Mod4] = Level3;
     map[Mod5] = Level4;
 
+    preserve[Shift] = Shift;
+
     level_name[Level1] = "Base";
     level_name[Level2] = "Shift";
     level_name[Level3] = "Mod5";
@@ -74,11 +76,12 @@ default xkb_types "thumbtypes" {
     map[Mod5] = Level3;
     map[Shift+Mod5] = Level4;
     map[Lock+Mod5] =  Level4;
-    map[Lock+Shift+Mod4] = Level3;
+    map[Lock+Shift+Mod5] = Level3;
 
     map[Mod4] = Level5;
-    map[Shift+Mod5] = Level6;
-    map[Lock+Mod5] =  Level6;
+    map[Shift+Mod4] = Level6;
+    map[Lock+Mod4] =  Level6;
+    map[Lock+Shit+Mod4] = Level5;
 
     preserve[Mod5+Shift] = Shift;
     preserve[Mod4+Shift] = Shift;

@@ -4,8 +4,8 @@ export _BASHPROFILE_SOURCED=1
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
-# machine dependent setting
-[ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
+# machine specific (not in the repository)
+[ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
 export XDG_CONFIG_HOME=$HOME/.config
 
