@@ -21,6 +21,9 @@ ln -s $wd/vimrc_dein $HOME/.vimrc_dein
 ln -s $wd/vim/rc/dein.toml $HOME/.vim/rc/dein.toml
 ln -s $wd/vim/rc/dein_lazy.toml $HOME/.vim/rc/dein_lazy.toml
 
+# ssh_agent
+ln -s $wd/sshrc $HOME/.sshrc
+
 # ssh_config
 [ ! -d $HOME/.ssh ] && mkdir -p $HOME/.ssh
 ln -s $wd/ssh_config $HOME/.ssh/config
