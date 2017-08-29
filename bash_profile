@@ -5,9 +5,6 @@ export _BASH_PROFILE=1
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
-# machine specific (not in the repository)
-[ -f "$HOME/.profile" ] && . "$HOME/.profile"
-
 export XDG_CONFIG_HOME=$HOME/.config
 
 export LANG=en_US.UTF-8
@@ -29,7 +26,7 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # miscs
 
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
-if [ "x$_PROFILE_SOURCED" != "x1" ] && [ -f "$HOME/.profile" ]; then
+if [ -z "$_PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
   . "$HOME/.profile"
 fi
 
