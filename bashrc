@@ -36,3 +36,6 @@ HISTTIMEFORMAT='%Y-%m-%d %T '
 
 # Pythonbrew
 [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+
+# TMUX
+[[ ! -z "$TMUX" ]] && source $HOME/.bash_profile

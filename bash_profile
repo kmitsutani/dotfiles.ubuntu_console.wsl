@@ -1,4 +1,5 @@
 # configuration of PATH
+export _BASH_PROFILE=1
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
@@ -30,6 +31,5 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
-export _SOURCE_PROFILE=1
 
-. $HOME/.bashrc
+[[ -z "$TMUX" ]] && . $HOME/.bashrc
