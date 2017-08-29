@@ -18,6 +18,12 @@ on_source = ['previm']
 repo = 'mattn/webapi-vim'
 on_source = ['previm', 'esa.vim']
 
+# hateblo
+[[plugins]]
+repo = 'moznion/hateblo.vim'
+depends = ['mattn/webapi-vim', 'Shougo/unite.vim']
+of_ft = ['mkd', 'md', 'markdown', 'html']
+
 ## Python
 [[plugins]]
 repo = 'davidhalter/jedi-vim'

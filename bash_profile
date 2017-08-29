@@ -1,10 +1,12 @@
+# Flag
+export _BASHPROFILE_SOURCED=1
 # configuration of PATH
 export _BASH_PROFILE=1
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
-# machine dependent setting
-[ -f $HOME/.bash_profile_machine ] && . $HOME/.bash_profile_machine
+# machine specific (not in the repository)
+[ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -18,9 +20,6 @@ if [ $(which pyenv | wc -l) -eq 0 ]; then
   export PYTHONPATH
 fi
 
-# ssh-agent
-. $HOME/.profile_ssh_agent
-
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
@@ -29,7 +28,11 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 # miscs
 
-[ -f "$HOME/.profile" ] && . "$HOME/.profile"
-
-
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
+if [ "x$_PROFILE_SOURCED" != "x1" ] && [ -f "$HOME/.profile" ]; then
+  . "$HOME/.profile"
+fi
+
+if [ -z "$_BASHRC_SOURCED" ] && [ -f "$HOME/.bashrc" ]; then
+  . "$HOME/.bashrc"
+fi

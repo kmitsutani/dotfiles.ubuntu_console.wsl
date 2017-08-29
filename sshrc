@@ -4,6 +4,7 @@ SSH_ENV="${HOME}/.ssh_environment"
 AUTHSOCK_SYMLINK="${HOME}/.ssh/auth_sock"
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
+whoami
 
 function start_agent {
   echo -n "Initialising new SSH agent ... "
