@@ -1,0 +1,20 @@
+@reqcmd=tmux:bc
+@reqdir=.vim/rc:.ssh:.tmux
+
+# bash
+bash_profile:
+bash_profile_path:
+sshrc:
+bashrc:
+
+# vim
+vimrc:
+vimrc_dein:
+vim/rc/dein.toml:
+vim/rc/dein_lazy.toml:
+
+# tmux
+tmux.conf:
+
+# xkb (for X11)
+xkb:
