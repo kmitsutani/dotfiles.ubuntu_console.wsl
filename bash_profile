@@ -13,7 +13,8 @@ export EDITOR=vim
 
 # LL module/package paths
 if [ $(which pyenv | wc -l) -eq 0 ]; then
-  PYTHONPATH=$PYTHONPATH:/usr/local/lib/python2.7/site-packages
+  PYTHONPATH=/usr/local/lib/python2.7/site-packages
+  PYTHONPATH=$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages
   export PYTHONPATH
 fi
 
@@ -24,6 +25,9 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 # miscs
+
+# ssh
+. $HOME/.ssh_profile
 
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
 if [ -z "$_PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
