@@ -4,7 +4,7 @@
 # bash
 bash_profile:
 bash_profile_path:
-sshrc:
+ssh_profile:
 bashrc:
 
 # vim
