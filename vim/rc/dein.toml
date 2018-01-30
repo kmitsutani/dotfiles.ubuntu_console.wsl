@@ -30,10 +30,6 @@ repo = 'tpope/vim-fugitive'
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 
-# sudo
-[[plugins]]
-repo = 'sudo.vim'
-
 #---------------------------
 # Web Service
 #---------------------------
