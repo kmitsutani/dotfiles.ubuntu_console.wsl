@@ -24,6 +24,11 @@ repo = 'moznion/hateblo.vim'
 depends = ['mattn/webapi-vim', 'Shougo/unite.vim']
 of_ft = ['mkd', 'md', 'markdown', 'html']
 
+## CPP
+[[plugins]]
+repo = 'vim-jp/cpp-vim'
+on_ft = 'cpp'
+
 ## Python
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
