@@ -20,6 +20,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'scrooloose/nerdtree'
+
+[[plugins]]
 repo = 'vim-scripts/grep.vim'
 
 # git
@@ -29,10 +32,6 @@ repo = 'tpope/vim-fugitive'
 # quick run
 [[plugins]]
 repo = 'thinca/vim-quickrun'
-
-# sudo
-[[plugins]]
-repo = 'sudo.vim'
 
 #---------------------------
 # Web Service

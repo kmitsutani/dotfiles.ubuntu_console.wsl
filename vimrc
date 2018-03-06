@@ -1,5 +1,4 @@
 syntax enable
-
 let g:not_isbow = glob("~/.isbow")
 
 " encodings
@@ -17,6 +16,7 @@ set fileformats=unix,dos,mac
 set ambiwidth=double
 set fileencoding=utf-8
 set ttimeoutlen=10
+set ambiwidth=double
 
 " backspace
 set backspace=indent,eol,start
