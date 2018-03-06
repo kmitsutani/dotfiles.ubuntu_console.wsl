@@ -1,9 +1,9 @@
 syntax enable
 
-let s:isbow = system("[ ! -f $HOME/.isbow ]; echo $?")
+let g:not_isbow = glob("~/.isbow")
 
 " encodings
-if s:isbow
+if g:not_isbow
   set encoding=utf-8
   set termencoding=utf-8
 else
