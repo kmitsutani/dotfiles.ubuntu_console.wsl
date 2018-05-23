@@ -8,7 +8,13 @@ on_i = 1
 [[plugins]]
 repo = 'kannokanno/previm'
 on_ft = ['mkd', 'md', 'markdown', 'html']
-depends = ['open-browser.vim', 'webapi-vim']
+'depends = ['open-browser.vim', 'webapi-vim']
+hook_add = '''
+  if !g:not_isbow
+    let g:previm_open_cmd=expand('~/bin/chrome_wrapper')
+  endif
+  let g:previm_enable_realtime=1
+'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
@@ -17,12 +23,6 @@ on_source = ['previm']
 [[plugins]]
 repo = 'mattn/webapi-vim'
 on_source = ['previm', 'esa.vim']
-
-# hateblo
-[[plugins]]
-repo = 'moznion/hateblo.vim'
-depends = ['mattn/webapi-vim', 'Shougo/unite.vim']
-of_ft = ['mkd', 'md', 'markdown', 'html']
 
 ## CPP
 [[plugins]]
