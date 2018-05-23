@@ -16,6 +16,7 @@ alias vi="vim -u /etc/vimrc --noplugin"
 alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
 alias sudoh="sudo -H"
 alias ssh="ssh -A"
+alias pip="python -m pip"
 
 # shell functions
 function hyperthumb(){
