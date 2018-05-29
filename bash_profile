@@ -27,7 +27,25 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # miscs
 
 # ssh
-. $HOME/.ssh_profile
+# . $HOME/.ssh_profile
+
+# venv hook
+function _venv_hook()
+{
+  cwd=$(pwd)
+  if [ "${VIRTUAL_ENV}" != "" ]; then
+    :
+    #if [[ ! $cwd =~ ${VIRTUAL_ENV}* ]]; then
+    #  deactivate
+    #fi
+  else
+    if [[ -f "${cwd}/.venv" ]]; then
+      _venv=$(cat "${cwd}/.venv")
+      . ${_venv}/bin/activate
+    fi
+  fi
+}
+export PROMPT_COMMAND="_venv_hook;$PROMPT_COMMAND"
 
 # venv hook
 function _venv_hook()
