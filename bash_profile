@@ -29,6 +29,26 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # ssh
 . $HOME/.ssh_profile
 
+# venv hook
+function _venv_hook()
+{
+  # assume virtual environments are not nested
+  cwd=$(pwd)
+  if [ "${VIRTUAL_ENV}" != "" ]; then
+    # already some virtual environment is active
+    # if cwd is parental node of directory tree, then deactivate
+    if [[ ! $cwd =~ ${VIRTUAL_ENV}* ]]; then
+      deactivate
+    fi
+  else
+    # if $cwd/bin/activate exists, then activate
+    if [ -f "${cwd}/bin/activate" ]; then
+      ${cwd}/bin/activate
+    fi
+  fi
+}
+export PROMPT_COMMAND="_venv_hook;$PROMPT_COMMAND"
+
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
 if [ -z "$_PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
   . "$HOME/.profile"

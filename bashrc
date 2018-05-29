@@ -18,6 +18,7 @@ alias sudoh="sudo -H"
 alias ssh="ssh -A"
 
 # shell functions
+
 function hyperthumb(){
     sudo xkbcomp -I$HOME/.xkb/hyperthumb $HOME/.xkb/hyperthumb/keymap $DISPLAY
 }

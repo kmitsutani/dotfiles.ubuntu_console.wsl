@@ -10,15 +10,16 @@ function start_agent {
     echo "succeeded!"
     chmod 600 "${SSH_ENV}"
     . "${SSH_ENV}"
-    id_files=($(find ${HOME}/.ssh -name "id_*" | wc -l))
+    id_files=($(find ${HOME}/.ssh -maxdepth 1 -name "id_*"))
     if [ ${#id_files[@]} -gt 0 ]; then
-      for id_file in ${id_files{@}};
+      for id_file in ${id_files[@]};
       do
         echo "ssh-add $id_file"
         ssh-add $id_file
       done
     fi
     if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
+      echo "ssh-add ${HOME}/.ssh/google_compute_engine"
       ssh-add ${HOME}/.ssh/google_compute_engine
     fi
 }

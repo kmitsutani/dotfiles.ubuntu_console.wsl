@@ -64,7 +64,7 @@ Host fd-lxc
   User ubuntu
 
 Host fd-ub16
-  HostName 172.17.0.1
+  HostName 192.168.48.113
   User ubuntu
 
 # General Multiple Port-forwarding (http://qiita.com/kawaz/items/a0151d3aa2b6f9c4b3b8)
