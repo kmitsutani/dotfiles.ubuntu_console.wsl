@@ -7,13 +7,25 @@ default xkb_types "thumbtypes" {
     map[None] = Level1;
     map[Mod4] = Level2;
     map[Mod5] = Level3;
-    map[Mod4+Mod5] = Level1;
 
     level_name[Level1] = "Base";
     level_name[Level2] = "Mod4";
     level_name[Level3] = "Mod5";
   };
+  type "THUMB_FOUR_LEVEL" {
+    modifiers = Shift+Mod4+Mod5;
+    map[None] = Level1;
+    map[Shift] = Level2;
+    map[Mod4] = Level3;
+    map[Mod5] = Level4;
 
+    preserve[Shift] = Shift;
+
+    level_name[Level1] = "Base";
+    level_name[Level2] = "Shift";
+    level_name[Level3] = "Mod5";
+    level_name[Level4] = "Mod4";
+  };
   type "MHNKN_FOUR_LEVEL" {
     modifiers = Shift+Lock+Mod4;
     map[None] = Level1;
@@ -30,7 +42,7 @@ default xkb_types "thumbtypes" {
 
     level_name[Level1] = "Base";
     level_name[Level2] = "Shift";
-    level_name[Level3] = "Mod4 Base";
+    level_name[Level3] = "Base Mod4";
     level_name[Level4] = "Shift Mod4";
   };
 
@@ -54,5 +66,31 @@ default xkb_types "thumbtypes" {
     level_name[Level3] = "Mod5";
     level_name[Level4] = "Shift Mod5";
     level_name[Level5] = "Mod4";
+  };
+
+  type "THUMB_SIX_LEVEL" {
+    modifiers = Shift+Lock+Mod4+Mod5;
+    map[None] = Level1;
+    map[Shift] = Level2;
+    map[Lock]  = Level2;
+    map[Mod5] = Level3;
+    map[Shift+Mod5] = Level4;
+    map[Lock+Mod5] =  Level4;
+    map[Lock+Shift+Mod5] = Level3;
+
+    map[Mod4] = Level5;
+    map[Shift+Mod4] = Level6;
+    map[Lock+Mod4] =  Level6;
+    map[Lock+Shit+Mod4] = Level5;
+
+    preserve[Mod5+Shift] = Shift;
+    preserve[Mod4+Shift] = Shift;
+
+    level_name[Level1] = "Base";
+    level_name[Level2] = "Shift";
+    level_name[Level3] = "Mod5";
+    level_name[Level4] = "Shift Mod5";
+    level_name[Level5] = "Mod4";
+    level_name[Level6] = "Shift Mod4";
   };
 };

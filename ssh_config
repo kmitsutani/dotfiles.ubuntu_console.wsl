@@ -13,6 +13,10 @@ Host gist.github.com
   User mitsutani-fd
   IdentityFile ~/.ssh/id_fairy
 
+Host bitbucket.org
+  HostName bitbucket.org
+  AddressFamily inet
+
 Host home-rpi
   HostName maxwells.daemon.asia
   User kazuya
@@ -42,7 +46,7 @@ Host fd-pothos
 
 Host fd-macbook
   User mitsutani
-  HostName 192.168.48.32
+  HostName 192.168.48.43
 
 # momoiro cluster
 Host fd-momoiro*

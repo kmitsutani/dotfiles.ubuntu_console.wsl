@@ -16,6 +16,10 @@ if [ -d "$HOME/bin" ] ; then
     add2PATH "$HOME/bin"
 fi
 
+if [ -d "$HOME/.local/bin" ] ; then
+  add2PATH "$HOME/.local/bin"
+fi
+
 ## paths to add
 paths=""
 paths="$paths\
@@ -26,18 +30,28 @@ paths="$paths\
   /usr/local/SPTK/bin\
 "
 
-for path in ${paths[@]}; do
-    add2PATH $path
+if [ -d "/home/ubuntu/.miniconda3/" ]; then
+  paths="\
+    /home/ubuntu/.miniconda3/bin\
+    $paths\
+  "
+fi
+
+
+for rpath in ${paths[@]}; do
+  add2PATH $rpath
 done
 
 unset paths
 unset path
 
 ## trim doubling
-# LF=$(printf '\\\012_') 
-# LF=${LF%_} 
-# PATH=$(echo $PATH | sed -e "s/:/$LF/g" | sort -r | uniq | perl -pe 's/\n/:/g;')
-# PATH=${PATH:1:$((${#PATH} - 2))}
-# unset LF
+oldLF=${LF}
+LF=$(printf '\\\012_') 
+LF=${LF%_} 
+PATH=$(echo $PATH | sed -e "s/:/$LF/g" | sort -r | uniq | perl -pe 's/\n/:/g;')
+PATH=${PATH:1:$((${#PATH} - 2))}
+LF=${oldLF}
+unset oldLF
 
 export PATH

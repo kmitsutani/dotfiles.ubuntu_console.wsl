@@ -11,7 +11,7 @@ files=("\
   .bash_path\
   .bashrc_osdep\
   .bash_profile\
-  .bashrc_ssh_agent\
+  .ssh_profile\
   .bashrc\
   .vimrc\
   .vimrc_dein\
@@ -34,7 +34,7 @@ rm $HOME/.bash_profile_path
 rm $HOME/.bash_profile
 rm $HOME/.bashrc_osdep
 rm $HOME/.bashrc
-rm $HOME/.bashrc_ssh_agent
+rm $HOME/.ssh_profile
 rm $HOME/.profile_ssh_agent
 rm $HOME/.vimrc
 rm $HOME/.vimrc_dein

@@ -1,9 +1,8 @@
 syntax enable
-
-let s:isbow = system("[ ! -f $HOME/.isbow ]; echo $?")
+let g:not_isbow = glob("~/.isbow")
 
 " encodings
-if s:isbow
+if g:not_isbow
   set encoding=utf-8
   set termencoding=utf-8
 else
@@ -17,6 +16,7 @@ set fileformats=unix,dos,mac
 set ambiwidth=double
 set fileencoding=utf-8
 set ttimeoutlen=10
+set ambiwidth=double
 
 " backspace
 set backspace=indent,eol,start
