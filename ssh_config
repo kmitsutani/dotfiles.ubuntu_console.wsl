@@ -23,6 +23,14 @@ Host home-win
   Port 22
   User kazuya
 
+
+# GCP instance
+# on-development
+Host gcp-dev
+  HostName 35.237.165.245
+  Port 22
+  User mitsutani
+
 # gateway to fd network
 Host gateway
   User mitsutani
@@ -57,6 +65,10 @@ Host fd-docmit
 
 Host fd-lxc
   HostName 192.168.48.119
+  User ubuntu
+
+Host fd-ub16
+  HostName 192.168.48.113
   User ubuntu
 
 # General Multiple Port-forwarding (http://qiita.com/kawaz/items/a0151d3aa2b6f9c4b3b8)
