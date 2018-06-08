@@ -33,3 +33,6 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 export _SOURCE_PROFILE=1
 
 . $HOME/.bashrc
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
