@@ -48,6 +48,7 @@ function _venv_hook()
 export PROMPT_COMMAND="_venv_hook;$PROMPT_COMMAND"
 
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
+
 if [ -z "$_PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
   . "$HOME/.profile"
 fi
