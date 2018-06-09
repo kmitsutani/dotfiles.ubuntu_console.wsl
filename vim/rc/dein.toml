@@ -40,3 +40,10 @@ repo = 'thinca/vim-quickrun'
 # w3m
 [[plugins]]
 repo = 'yuratomo/w3m.vim'
+
+# Slack
+[[plugins]]
+repo = 'yaasita/edit-slack.vim'
+hook_add = '''
+  let g:yaasita_slack_token = "PAYRS3oAetV2Dy97q0niSCTv"
+'''
