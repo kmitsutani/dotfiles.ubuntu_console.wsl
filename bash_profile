@@ -27,7 +27,7 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # miscs
 
 # ssh
-# . $HOME/.ssh_profile
+. $HOME/.ssh_profile
 
 # venv hook
 function _venv_hook()
