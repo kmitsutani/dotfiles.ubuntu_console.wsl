@@ -19,6 +19,13 @@ alias ssh="ssh -A"
 alias pip="python -m pip"
 
 # shell functions
+function viewone(){
+  if [ "$1" == "" ]; then
+    echo "Usage: viewone path"
+    return 0
+  fi
+  ls $1 | head -n 1 | xargs -I{} less {}
+}
 
 function hyperthumb(){
     sudo xkbcomp -I$HOME/.xkb/hyperthumb $HOME/.xkb/hyperthumb/keymap $DISPLAY

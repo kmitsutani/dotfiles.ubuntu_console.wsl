@@ -4,24 +4,32 @@ SSH_ENV="${HOME}/.ssh_environment"
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
 
-function start_agent {
-  echo -n "Initialising new SSH agent ... "
-    ${SSHAGENT} ${SSHAGENTARGS} >"${SSH_ENV}"
-    echo "succeeded!"
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}"
-    id_files=($(find ${HOME}/.ssh -maxdepth 1 -name "id_*"))
-    if [ ${#id_files[@]} -gt 0 ]; then
-      for id_file in ${id_files[@]};
-      do
-        echo "ssh-add $id_file"
-        ssh-add $id_file
-      done
-    fi
-    if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
-      echo "ssh-add ${HOME}/.ssh/google_compute_engine"
-      ssh-add ${HOME}/.ssh/google_compute_engine
-    fi
+function start_sshagent {
+  funcname="start_sshagent"
+  tmpfile=$(mktemp /tmp/XXXXXX.txt)
+
+  echo "[$funcname] trying ${SSHAGENT} ${SSHAGENTARGS} > ${SSH_ENV}"
+  ${SSHAGENT} ${SSHAGENTARGS} > ${SSH_ENV} 2>${tmpfile}
+  echo ${tmpfile}
+
+  echo "[$funcname] . ${SSH_ENV}"
+  . "${SSH_ENV}" >tmpfile 2>&1
+  echo -n "[$funcname] " 
+  cat $tmpfile
+
+  id_files=($(find ${HOME}/.ssh -maxdepth 1 -name "id_*"))
+  if [ ${#id_files[@]} -gt 0 ]; then
+    for id_file in ${id_files[@]};
+    do
+      echo "[$funcname] ssh-add $id_file"
+      ssh-add $id_file
+    done
+  fi
+
+  if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
+    echo "ssh-add ${HOME}/.ssh/google_compute_engine"
+    ssh-add ${HOME}/.ssh/google_compute_engine
+  fi
 }
 
 function get_terminal(){
@@ -39,26 +47,37 @@ function sshagent_singleton {
     return
   fi
   if [ -f "${SSH_ENV}" ]; then
+    echo "[$funcname] ssh_environment found. source it."
     . "${SSH_ENV}" >/dev/null
     cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' |\
           grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
     if [ $cnt -eq 0 ]; then
       echo "[$funcname] no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent;"
-      start_agent;
+      start_sshagent
     fi
     
     if [[ -z `ssh-add -l | grep "${HOME}/.ssh/id_"` ]]; then
+      echo "[$funcname] no key in ${HOME}/.ssh registered. re-regist them."
+      echo "[$funcname] ssh-add $HOME/.ssh/id_*"
       ssh-add $HOME/.ssh/id_*
     fi
   else
-      start_agent;
+    echo "[$funcname] ssh-environment not found. start_sshagent"
+      start_sshagent;
   fi
 }
 
 function fix_auth_sock {
   funcname="ssh-agent-fix-auth-sock"
   terminal=$1
+
+
   authsock_symlink=${HOME}/.ssh/auth_sock_from_${terminal}
+
+  # initial candidate
+  echo "[$funcname] $SSH_AUTH_SOCK"
+  [ ! -z "$SSH_AUTH_SOCK" ] && ln -sf ${authsock_symlink} >/dev/null 2>&1
+
   if [ -L ${authsock_symlink} ]; then
     if [ -S ${authsock_symlink} ]; then
       echo "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."

@@ -27,6 +27,14 @@ Host home-win
   Port 22
   User kazuya
 
+
+# GCP instance
+# on-development
+Host gcp-dev
+  HostName 35.237.165.245
+  Port 22
+  User mitsutani
+
 # gateway to fd network
 Host gateway
   User mitsutani

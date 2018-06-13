@@ -68,10 +68,11 @@ function _venv_hook()
 export PROMPT_COMMAND="_venv_hook;$PROMPT_COMMAND"
 
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
+
 if [ -z "$_PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
   . "$HOME/.profile"
 fi
 
-if [ -z "$_BASHRC_SOURCED" ] && [ -f "$HOME/.bashrc" ]; then
-  . "$HOME/.bashrc"
-fi
+. $HOME/.bashrc
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
