@@ -1,7 +1,3 @@
-# Flag
-export _BASHPROFILE_SOURCED=1
-# configuration of PATH
-export _BASH_PROFILE=1
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
@@ -68,10 +64,6 @@ function _venv_hook()
 export PROMPT_COMMAND="_venv_hook;$PROMPT_COMMAND"
 
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
-
-if [ -z "$_PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
-  . "$HOME/.profile"
-fi
 
 . $HOME/.bashrc
 

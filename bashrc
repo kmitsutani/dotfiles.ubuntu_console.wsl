@@ -1,6 +1,4 @@
 # source .bash_profile if not .bash_profile is not sourced
-# Flag
-export _BASHRC_SOURCED=1
 
 # aliases
 if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
@@ -72,3 +70,11 @@ HISTTIMEFORMAT='200~%Y-%m-%d %T '
 
 # added by Miniconda3 installer
 export PATH="/home/ubuntu/miniconda3/bin:$PATH"
+
+if [ -f ${HOME}/etc/mintty-colors-solarized/sol.dark ];then
+  source ${HOME}/etc/mintty-colors-solarized/sol.dark 
+fi
+
+if [ -f ${HOME}/etc/dircolors-solarized/dircolors.ansi-dark ];then
+  eval `dircolors ${HOME}/etc/dircolors-solarized/dircolors.ansi-dark`
+fi
