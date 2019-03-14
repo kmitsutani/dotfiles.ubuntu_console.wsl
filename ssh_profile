@@ -10,11 +10,12 @@ function debug {
 }
 
 function get_terminal(){
-  if [ $(hostname) == "DESKTOP-480H201" ];then
-    echo "home"
-  else
-    echo "office"
-  fi
+  hostname=$(hostname)
+  case "$hostname" in
+    "DESKTOP-480H201" ) echo "alienware.home" ;;
+    "DESKTOP-DCG6N8H" ) echo "E480.home" ;;
+    * ) echo "macbook.office" ;;
+  esac
 }
 
 function start_sshagent {
