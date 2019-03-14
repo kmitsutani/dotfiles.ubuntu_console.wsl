@@ -1,2 +1,2 @@
 rm ${HOME}/.ssh/environment
-rm ${HOME}/.ssh/auth_sock_from_home
+rm ${HOME}/.ssh/auth_sock_from_*
