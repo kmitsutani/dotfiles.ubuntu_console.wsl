@@ -76,3 +76,7 @@ fi
 . $HOME/.bashrc
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+if [ ! -z "$(cd ${HOME}/dotfiles; git status -s)" ]; then
+  echo "you have something to do with dotfiles git repository"
+fi
