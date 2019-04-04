@@ -1,7 +1,3 @@
-# Flag
-export _BASHPROFILE_SOURCED=1
-# configuration of PATH
-export _BASH_PROFILE=1
 ## add given path to PATH
 . $HOME/.bash_profile_path
 
@@ -18,14 +14,14 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 # library specific
 export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
-# miscs
 
-if [ -z "$_BASHRC_SOURCED" ];then
-  . $HOME/.bashrc
-fi
+# ssh
+. $HOME/.ssh_profile
 
-if [ -z "$_PROFILE_SOURCED" ] && [ -f "$HOME/.profile" ]; then
-  . "$HOME/.profile"
-fi
+[[ -z "$TMUX" ]] && . $HOME/.bashrc
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+if [ ! -z "$(cd ${HOME}/dotfiles; git status -s)" ]; then
+  echo "you have something to do with dotfiles git repository"
+fi

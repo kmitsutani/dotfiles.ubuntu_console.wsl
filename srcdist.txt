@@ -6,6 +6,7 @@ bash_profile:
 bash_profile_path:
 ssh_profile:
 bashrc:
+bash_logout:
 
 # vim
 vimrc:
