@@ -1,8 +1,3 @@
-# on_i
-[[plugins]]
-repo = 'Raimondi/delimitMate'
-on_i = 1
-
 # on_ft
 ## preview
 [[plugins]]

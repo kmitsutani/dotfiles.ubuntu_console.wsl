@@ -2,6 +2,8 @@
 wd=$(cd $(dirname $0); pwd)
 cd $wd
 
+sudo apt-get install bc tmux
+
 _lndot(){
   line=$1  
   src_dist=($(sed -e "s/:/ /" <<< $line))
