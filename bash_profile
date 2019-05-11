@@ -18,6 +18,12 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # ssh
 . $HOME/.ssh_profile
 
+# virtualenv wrapper
+if [ -f "$(which virtualenvwrapper.sh)" ]; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    source $(which virtualenvwrapper.sh)
+fi
+
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
