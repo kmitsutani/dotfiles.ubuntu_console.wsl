@@ -69,7 +69,7 @@ export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\
 HISTTIMEFORMAT='200~%Y-%m-%d %T '
 
 # ssh
-. $HOME/.ssh_profile
+. $HOME/.sshrc_tmux
 
 export PATH="/home/ubuntu/miniconda3/bin:$PATH"
 
