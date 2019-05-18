@@ -1,2 +1,2 @@
 [ -f ${HOME}/.ssh/environment ] && rm ${HOME}/.ssh/environment
-rm ${HOME}/.ssh/auth_sock_from_*
+find ${HOME}/.ssh/ -type f -name "auth_sock_from_*" | xargs -I{} rm {}
