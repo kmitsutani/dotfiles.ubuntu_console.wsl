@@ -5,99 +5,16 @@ function debug(){
   echo $1 >&2
 }
 
-
-function start_agent {
-  debug -n "Initialising new SSH agent ... "
-    ${SSHAGENT} ${SSHAGENTARGS} >"${SSH_ENV}"
-    debug "succeeded!"
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}"
-    id_files=($(find ${HOME}/.ssh -name "id_*" | wc -l))
-    if [ ${#id_files[@]} -gt 0 ]; then
-      for id_file in ${id_files{@}};
-      do
-        debug "ssh-add $id_file"
-        ssh-add $id_file
-      done
-    fi
-    if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
-      ssh-add ${HOME}/.ssh/google_compute_engine
-    fi
-}
-
-function get_terminal(){
-  hostname=$(hostname)
-  case "$hostname" in
-    "DESKTOP-480H201" ) echo "alienware.home" ;;
-    "DESKTOP-DCG6N8H" ) echo "E480.home" ;;
-    * ) echo "macbook.office" ;;
-  esac
-}
-
-function start_sshagent {
-  funcname="start_sshagent"
-  tmpfile=$(mktemp /tmp/XXXXXX.txt)
-
-  debug "[$funcname] trying ${SSHAGENT} ${SSHAGENTARGS} > ${SSH_ENV}"
-  ${SSHAGENT} ${SSHAGENTARGS} > ${SSH_ENV} 2>${tmpfile}
-  if [ -s ${tmpfile} ]; then
-    debug "[$funcname] error message is dumped into ${tmpfile}"
-  fi
-
-  debug "[$funcname] . ${SSH_ENV}"
-  . "${SSH_ENV}" >tmpfile 2>&1
-  debug -n "[$funcname] " 
-  cat $tmpfile
-
-  id_files=($(find ${HOME}/.ssh -maxdepth 1 -name "id_*"))
-  if [ ${#id_files[@]} -gt 0 ]; then
-    for id_file in ${id_files[@]};
-    do
-      debug "[$funcname] ssh-add $id_file"
-      ssh-add $id_file
-    done
-  fi
-
-  if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
-    debug "ssh-add ${HOME}/.ssh/google_compute_engine"
-    ssh-add ${HOME}/.ssh/google_compute_engine
-  fi
-}
-
-function sshagent_singleton {
-  funcname="ssh-agent-singleton"
-  if [ `find ${HOME}/.ssh -name "id_*" | wc -l` -eq 0 ]; then
-    debug "[$funcname] INFO: not a client machine. skip;"
-    return
-  fi
-  if [ -f "${SSH_ENV}" ]; then
-    . "${SSH_ENV}" >/dev/null
-    cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' |\
-          grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
-    if [ $cnt -eq 0 ]; then
-      debug "[$funcname] no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent;"
-      start_agent;
-    fi
-    
-    if [[ -z `ssh-add -l | grep "${HOME}/.ssh/id_"` ]]; then
-      debug "[$funcname] no key in ${HOME}/.ssh registered. re-regist them."
-      debug "[$funcname] ssh-add $HOME/.ssh/id_*"
-      ssh-add $HOME/.ssh/id_*
-    fi
-  else
-    debug "[$funcname] ssh-environment not found. start_sshagent"
-      start_sshagent;
-  fi
-}
-
 function fix_auth_sock {
   funcname="ssh-agent-fix-auth-sock"
   authsock_symlink=$AUTHSOCK_SYMLINK
+  echo debug $authsock_symlink
   if [ -L ${authsock_symlink} ]; then
     if [ -S ${authsock_symlink} ]; then
       debug "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
       debug "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
       export SSH_AUTH_SOCK=${authsock_symlink}
+      export AUTHSOCK_SYMLINK=${authsock_symlink}
     else
       debug "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
       newest_socket=$(find /tmp -name "ssh*" -type d 2>/dev/null|\
