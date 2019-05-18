@@ -103,6 +103,7 @@ function fix_auth_sock {
       debug "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
       debug "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
       export SSH_AUTH_SOCK=${authsock_symlink}
+      export AUTHSOCK_SYMLINK=${authsock_symlink}
     else
       debug "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
       newest_socket=$(find /tmp -name "ssh*" -type d 2>/dev/null|\
