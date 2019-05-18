@@ -40,8 +40,8 @@ rm $HOME/.vimrc
 rm $HOME/.vimrc_dein
 rm $HOME/.vim/rc/dein.toml
 rm $HOME/.vim/rc/dein_lazy.toml
-rmdir $HOME/.vim/rc
-rmdir $HOME/.vim
+rm -rf $HOME/.vim/rc
+rm -rf $HOME/.vim
 rm $HOME/.ssh/config
 rm $HOME/.tmux.conf
 rm $HOME/.tmux/mouse.conf
