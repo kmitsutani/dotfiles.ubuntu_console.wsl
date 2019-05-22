@@ -49,7 +49,7 @@ function start_sshagent {
   fi
 
   debug "[$funcname] . ${SSH_ENV}"
-  . "${SSH_ENV}" >tmpfile 2>&1
+  . "${SSH_ENV}" >$tmpfile 2>&1
   debug -n "[$funcname] " 
   cat $tmpfile
 
