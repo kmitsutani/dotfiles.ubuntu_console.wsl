@@ -8,7 +8,6 @@ function debug(){
 function fix_auth_sock {
   funcname="ssh-agent-fix-auth-sock"
   authsock_symlink=$AUTHSOCK_SYMLINK
-  echo debug $authsock_symlink
   if [ -L ${authsock_symlink} ]; then
     if [ -S ${authsock_symlink} ]; then
       debug "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
