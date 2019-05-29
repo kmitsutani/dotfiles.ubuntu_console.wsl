@@ -5,7 +5,9 @@
 bash_profile:
 bash_profile_path:
 ssh_profile:
+sshrc_tmux:
 bashrc:
+bash_logout:
 
 # vim
 vimrc:

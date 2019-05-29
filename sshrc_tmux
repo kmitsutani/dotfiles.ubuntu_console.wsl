@@ -1,0 +1,50 @@
+# To avoid duplicated activation
+# Source SSH settings, if applicable
+
+function debug(){
+  echo $1 >&2
+}
+
+function fix_auth_sock {
+  funcname="ssh-agent-fix-auth-sock"
+  authsock_symlink=$AUTHSOCK_SYMLINK
+  if [ -L ${authsock_symlink} ]; then
+    if [ -S ${authsock_symlink} ]; then
+      debug "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
+      debug "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
+      export SSH_AUTH_SOCK=${authsock_symlink}
+      export AUTHSOCK_SYMLINK=${authsock_symlink}
+    else
+      debug "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
+      newest_socket=$(find /tmp -name "ssh*" -type d 2>/dev/null|\
+                      xargs -I{} find {} -name "agent*" -type s -readable -print0 |\
+                      xargs -0 -I{} ls -alu --full-time {} |\
+                      awk '{print $6"-"$7, $9}' |\
+                      sed -e s/://g |\
+                      sort -nr | head -n1 | cut -f 2 -d ' ')
+
+      if [ ! -z "${newest_socket}" ]; then
+        debug "[$funcname] INFO: new socket found at '${newest_socket}'."
+        debug "[$funcname] INFO: re-linked it to ${authsock_symlink}"
+        ln -snf "$newest_socket" ${authsock_symlink}
+        export SSH_AUTH_SOCK=${authsock_symlink}
+      fi
+    fi
+  elif [ -S "$SSH_AUTH_SOCK" ]; then
+    case $SSH_AUTH_SOCK in
+      /tmp/*/agent.[0-9]*)
+        debug "[$funcname] INFO: SSH_AUTH_SOCK=${SSH_AUTH_SOCK};"
+        debug "[$funcname] INFO: link it to ${authsock_symlink} and re-export;" 
+        ln -snf "$SSH_AUTH_SOCK" ${authsock_symlink}
+        export SSH_AUTH_SOCK=${authsock_symlink}
+        ;;
+      "${authsock_symlink}")
+        debug "[$funcname] INFO: ssh-agent authentication socket is already fixed. do nothing."
+        ;;
+    esac
+  else
+    debug "[$funcname] ERROR: no socket found."
+  fi
+}
+
+fix_auth_sock

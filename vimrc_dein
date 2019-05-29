@@ -1,3 +1,8 @@
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
+
 " plugin management by dein
 
 let s:dein_dir = fnamemodify('~/.cache/vim/dein/', ':p') 

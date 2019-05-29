@@ -1,11 +1,41 @@
 # To avoid duplicated activation
 # Source SSH settings, if applicable
-SSH_ENV="${HOME}/.ssh_environment"
+SSH_ENV="${HOME}/.ssh/environment"
+AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock_from_
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
 
-function debug() {
+function debug(){
   echo $1 >&2
+}
+
+
+function start_agent {
+  debug -n "Initialising new SSH agent ... "
+    ${SSHAGENT} ${SSHAGENTARGS} >"${SSH_ENV}"
+    debug "succeeded!"
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}"
+    id_files=($(find ${HOME}/.ssh -name "id_*" | wc -l))
+    if [ ${#id_files[@]} -gt 0 ]; then
+      for id_file in ${id_files{@}};
+      do
+        debug "ssh-add $id_file"
+        ssh-add $id_file
+      done
+    fi
+    if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
+      ssh-add ${HOME}/.ssh/google_compute_engine
+    fi
+}
+
+function get_terminal(){
+  hostname=$(hostname)
+  case "$hostname" in
+    "DESKTOP-480H201" ) echo "alienware.home" ;;
+    "DESKTOP-DCG6N8H" ) echo "E480.home" ;;
+    * ) echo "macbook.office" ;;
+  esac
 }
 
 function start_sshagent {
@@ -36,14 +66,6 @@ function start_sshagent {
   fi
 }
 
-function get_terminal(){
-  if [ $(ssh-add -l | grep bricomplex | wc -l) -gt 0 ]; then
-    echo "home"
-  else
-    echo "office"
-  fi
-}
-
 function sshagent_singleton {
   funcname="ssh-agent-singleton"
   if [ `find ${HOME}/.ssh -name "id_*" | wc -l` -eq 0 ]; then
@@ -57,7 +79,7 @@ function sshagent_singleton {
           grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
     if [ $cnt -eq 0 ]; then
       debug "[$funcname] no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent;"
-      start_sshagent
+      start_agent;
     fi
     
     if [[ -z `ssh-add -l | grep "${HOME}/.ssh/id_"` ]]; then
@@ -74,8 +96,6 @@ function sshagent_singleton {
 function fix_auth_sock {
   funcname="ssh-agent-fix-auth-sock"
   terminal=$1
-
-
   authsock_symlink=${HOME}/.ssh/auth_sock_from_${terminal}
 
   # initial candidate
@@ -87,19 +107,20 @@ function fix_auth_sock {
       debug "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
       debug "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
       export SSH_AUTH_SOCK=${authsock_symlink}
+      export AUTHSOCK_SYMLINK=${authsock_symlink}
     else
       debug "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
-      newest_socket=$(find /tmp -name "ssh*" -type d |\
-                      xargs -I{} find {} -name "agent*" -type s -print0 |\
+      newest_socket=$(find /tmp -name "ssh*" -type d 2>/dev/null|\
+                      xargs -I{} find {} -name "agent*" -type s -readable -print0 |\
                       xargs -0 -I{} ls -alu --full-time {} |\
                       awk '{print $6"-"$7, $9}' |\
-                      sed -e s/-//g -e s/://g |\
+                      sed -e s/://g |\
                       sort -nr | head -n1 | cut -f 2 -d ' ')
 
       if [ ! -z "${newest_socket}" ]; then
         debug "[$funcname] INFO: new socket found at '${newest_socket}'."
         debug "[$funcname] INFO: re-linked it to ${authsock_symlink}"
-        ln -snf $newest_socket ${authsock_symlink}
+        ln -snf "$newest_socket" ${authsock_symlink}
         export SSH_AUTH_SOCK=${authsock_symlink}
       fi
     fi
@@ -120,6 +141,7 @@ function fix_auth_sock {
   fi
 }
 
-sshagent_singleton
 terminal=$(get_terminal)
+AUTHSOCK_SYMLINK=${AUTHSOCK_PREFIX}${terminal}
+sshagent_singleton
 fix_auth_sock $terminal
