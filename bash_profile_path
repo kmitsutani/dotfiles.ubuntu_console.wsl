@@ -54,4 +54,8 @@ PATH=${PATH:1:$((${#PATH} - 2))}
 LF=${oldLF}
 unset oldLF
 
+if [ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc]; then
+  . /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc
+fi
+
 export PATH
