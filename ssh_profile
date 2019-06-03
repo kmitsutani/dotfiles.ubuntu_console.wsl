@@ -5,22 +5,22 @@ AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock_from_
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
 
-function debug(){
+function info(){
   echo $1 >&2
 }
 
 
 function start_agent {
-  debug -n "Initialising new SSH agent ... "
+  info -n "Initialising new SSH agent ... "
     ${SSHAGENT} ${SSHAGENTARGS} >"${SSH_ENV}"
-    debug "succeeded!"
+    info "succeeded!"
     chmod 600 "${SSH_ENV}"
     . "${SSH_ENV}"
     id_files=($(find ${HOME}/.ssh -name "id_*" | wc -l))
     if [ ${#id_files[@]} -gt 0 ]; then
       for id_file in ${id_files{@}};
       do
-        debug "ssh-add $id_file"
+        info "ssh-add $id_file"
         ssh-add $id_file
       done
     fi
@@ -31,28 +31,29 @@ function start_agent {
 
 function start_sshagent {
   funcname="start_sshagent"
-  tmpfile=$(mktemp /tmp/XXXXXX.txt)
+  tmpfile=$(mktemp /tmp/ssh.XXXXXXXXXX) 
+  info ${tmpfile}
 
-  debug "[$funcname] trying ${SSHAGENT} ${SSHAGENTARGS} > ${SSH_ENV}"
-  ${SSHAGENT} ${SSHAGENTARGS} > ${SSH_ENV} 2>${tmpfile}
-  debug ${tmpfile}
+  info "[$funcname] trying ${SSHAGENT} ${SSHAGENTARGS} > ${SSH_ENV}"
+  ${SSHAGENT} ${SSHAGENTARGS} >${SSH_ENV} 2>${tmpfile}
+  info ${tmpfile}
 
-  debug "[$funcname] . ${SSH_ENV}"
-  . "${SSH_ENV}" >tmpfile 2>&1
-  debug -n "[$funcname] " 
+  info "[$funcname] . ${SSH_ENV}"
+  . "${SSH_ENV}" >${tmpfile} 2>&1
+  info -n "[$funcname] " 
   cat $tmpfile
 
   id_files=($(find ${HOME}/.ssh -maxdepth 1 -name "id_*"))
   if [ ${#id_files[@]} -gt 0 ]; then
     for id_file in ${id_files[@]};
     do
-      debug "[$funcname] ssh-add $id_file"
+      info "[$funcname] ssh-add $id_file"
       ssh-add $id_file
     done
   fi
 
   if [ -f "${HOME}/.ssh/google_compute_engine" ]; then 
-    debug "ssh-add ${HOME}/.ssh/google_compute_engine"
+    info "ssh-add ${HOME}/.ssh/google_compute_engine"
     ssh-add ${HOME}/.ssh/google_compute_engine
   fi
 }
@@ -60,26 +61,26 @@ function start_sshagent {
 function sshagent_singleton {
   funcname="ssh-agent-singleton"
   if [ `find ${HOME}/.ssh -name "id_*" | wc -l` -eq 0 ]; then
-    debug "[$funcname] INFO: not a client machine. skip;"
+    info "[$funcname] INFO: not a client machine. skip;"
     return
   fi
   if [ -f "${SSH_ENV}" ]; then
-    debug "[$funcname] ssh_environment found. source it."
+    info "[$funcname] ssh_environment found. source it."
     . "${SSH_ENV}" >/dev/null
     cnt=$(ps -ef | grep "${SSH_AGENT_PID}" | awk '{print $8}' |\
           grep "[/a-zA-Z0-9]*ssh-agent[ -s]*$" | wc -l)
     if [ $cnt -eq 0 ]; then
-      debug "[$funcname] no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent;"
+      info "[$funcname] no ssh-agent with condition of ${SSH_ENV}. restart ssh-agent;"
       start_agent;
     fi
     
     if [[ -z `ssh-add -l | grep "${HOME}/.ssh/id_"` ]]; then
-      debug "[$funcname] no key in ${HOME}/.ssh registered. re-regist them."
-      debug "[$funcname] ssh-add $HOME/.ssh/id_*"
+      info "[$funcname] no key in ${HOME}/.ssh registered. re-regist them."
+      info "[$funcname] ssh-add $HOME/.ssh/id_*"
       ssh-add $HOME/.ssh/id_*
     fi
   else
-    debug "[$funcname] ssh-environment not found. start_sshagent"
+    info "[$funcname] ssh-environment not found. start_sshagent"
       start_sshagent;
   fi
 }
@@ -90,17 +91,17 @@ function fix_auth_sock {
   authsock_symlink=${HOME}/.ssh/auth_sock_from_${terminal}
 
   # initial candidate
-  debug "[$funcname] $SSH_AUTH_SOCK"
+  info "[$funcname] $SSH_AUTH_SOCK"
   [ ! -z "$SSH_AUTH_SOCK" ] && ln -sf ${authsock_symlink} >/dev/null 2>&1
 
   if [ -L ${authsock_symlink} ]; then
     if [ -S ${authsock_symlink} ]; then
-      debug "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
-      debug "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
+      info "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
+      info "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
       export SSH_AUTH_SOCK=${authsock_symlink}
       export AUTHSOCK_SYMLINK=${authsock_symlink}
     else
-      debug "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
+      info "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
       newest_socket=$(find /tmp -name "ssh*" -type d 2>/dev/null|\
                       xargs -I{} find {} -name "agent*" -type s -readable -print0 |\
                       xargs -0 -I{} ls -alu --full-time {} |\
@@ -109,8 +110,8 @@ function fix_auth_sock {
                       sort -nr | head -n1 | cut -f 2 -d ' ')
 
       if [ ! -z "${newest_socket}" ]; then
-        debug "[$funcname] INFO: new socket found at '${newest_socket}'."
-        debug "[$funcname] INFO: re-linked it to ${authsock_symlink}"
+        info "[$funcname] INFO: new socket found at '${newest_socket}'."
+        info "[$funcname] INFO: re-linked it to ${authsock_symlink}"
         ln -snf "$newest_socket" ${authsock_symlink}
         export SSH_AUTH_SOCK=${authsock_symlink}
       fi
@@ -118,17 +119,17 @@ function fix_auth_sock {
   elif [ -S "$SSH_AUTH_SOCK" ]; then
     case $SSH_AUTH_SOCK in
       /tmp/*/agent.[0-9]*)
-        debug "[$funcname] INFO: SSH_AUTH_SOCK=${SSH_AUTH_SOCK};"
-        debug "[$funcname] INFO: link it to ${authsock_symlink} and re-export;" 
+        info "[$funcname] INFO: SSH_AUTH_SOCK=${SSH_AUTH_SOCK};"
+        info "[$funcname] INFO: link it to ${authsock_symlink} and re-export;" 
         ln -snf "$SSH_AUTH_SOCK" ${authsock_symlink}
         export SSH_AUTH_SOCK=${authsock_symlink}
         ;;
       "${authsock_symlink}")
-        debug "[$funcname] INFO: ssh-agent authentication socket is already fixed. do nothing."
+        info "[$funcname] INFO: ssh-agent authentication socket is already fixed. do nothing."
         ;;
     esac
   else
-    debug "[$funcname] ERROR: no socket found."
+    info "[$funcname] ERROR: no socket found."
   fi
 }
 
