@@ -1,7 +1,7 @@
 # To avoid duplicated activation
 # Source SSH settings, if applicable
 SSH_ENV="${HOME}/.ssh/environment"
-AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock_from_
+AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock_
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
 
@@ -60,7 +60,7 @@ function start_sshagent {
 
 function sshagent_singleton {
   funcname="ssh-agent-singleton"
-  if [ `find ${HOME}/.ssh -name "id_*" | wc -l` -eq 0 ]; then
+  if [ $(find ${HOME}/.ssh -name "id_*" | wc -l) -eq 0 ]; then
     info "[$funcname] INFO: not a client machine. skip;"
     return
   fi
@@ -133,6 +133,6 @@ function fix_auth_sock {
   fi
 }
 
-AUTHSOCK_SYMLINK=${AUTHSOCK_PREFIX}$(hostname)
+AUTHSOCK_SYMLINK=${AUTHSOCK_PREFIX}_$(whoami)_$(hostname)
 sshagent_singleton
 fix_auth_sock $terminal
