@@ -7,6 +7,12 @@ export LANG=en_US.UTF-8
 # configure miscellaneous environmental vaiables
 export EDITOR=vim
 
+# LL module/package paths
+if [ $(which pyenv | wc -l) -eq 0 ]; then
+  PYTHONPATH=/usr/local/lib/python2.7/site-packages
+  PYTHONPATH=$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages
+  export PYTHONPATH
+fi
 
 # pkgconfig
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
@@ -23,6 +29,7 @@ if [ -f "$(which virtualenvwrapper.sh)" ]; then
     export WORKON_HOME=$HOME/.virtualenvs
     source $(which virtualenvwrapper.sh)
 fi
+
 
 [[ -z "$TMUX" ]] && . $HOME/.bashrc
 

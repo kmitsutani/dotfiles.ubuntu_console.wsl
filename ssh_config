@@ -31,7 +31,12 @@ Host home-win
 # GCP instance
 # on-development
 Host gcp-dev
-  HostName 35.237.163.194
+  HostName 35.243.154.156
+  Port 22
+  User mitsutani
+
+Host gcp-lang
+  HostName 35.243.118.250
   Port 22
   User mitsutani
 
