@@ -29,15 +29,6 @@ function start_agent {
     fi
 }
 
-function get_terminal(){
-  hostname=$(hostname)
-  case "$hostname" in
-    "DESKTOP-480H201" ) echo "alienware.home" ;;
-    "DESKTOP-DCG6N8H" ) echo "E480.home" ;;
-    * ) echo "macbook.office" ;;
-  esac
-}
-
 function start_sshagent {
   funcname="start_sshagent"
   tmpfile=$(mktemp /tmp/XXXXXX.txt)
@@ -141,7 +132,6 @@ function fix_auth_sock {
   fi
 }
 
-terminal=$(get_terminal)
-AUTHSOCK_SYMLINK=${AUTHSOCK_PREFIX}${terminal}
+AUTHSOCK_SYMLINK=${AUTHSOCK_PREFIX}$(hostname)
 sshagent_singleton
 fix_auth_sock $terminal
