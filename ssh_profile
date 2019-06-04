@@ -87,12 +87,15 @@ function sshagent_singleton {
 
 function fix_auth_sock {
   funcname="ssh-agent-fix-auth-sock"
-  terminal=$1
-  authsock_symlink=${HOME}/.ssh/auth_sock_from_${terminal}
+  auth_sock_symlink=$1
 
   # initial candidate
-  info "[$funcname] $SSH_AUTH_SOCK"
-  [ ! -z "$SSH_AUTH_SOCK" ] && ln -sf ${authsock_symlink} >/dev/null 2>&1
+  if [ -S $SSH_AUTH_SOCK]; then
+    info "[$funcname] symlink: $SSH_AUTH_SOCK -> ${auth_sock_symlink}"
+    ln -snf $SSH_AUTH_SOCK ${auth_sock_symlink}
+    export SSH_AUTH_SOCK=${auth_sock_symlink}
+    return
+  fi
 
   if [ -L ${authsock_symlink} ]; then
     if [ -S ${authsock_symlink} ]; then
@@ -133,6 +136,13 @@ function fix_auth_sock {
   fi
 }
 
-AUTHSOCK_SYMLINK=${AUTHSOCK_PREFIX}_$(whoami)_$(hostname)
+username=$(whoami)
+login_info=($(last $username | head -n 1))
+if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
+  hostname=$(curl -s ifconfig.io)
+else
+  hostname=${login_info[1]}
+fi
+auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
 sshagent_singleton
 fix_auth_sock $terminal
