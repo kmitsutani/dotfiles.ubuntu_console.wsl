@@ -90,7 +90,7 @@ function fix_auth_sock {
   auth_sock_symlink=$1
 
   # initial candidate
-  if [ -S $SSH_AUTH_SOCK]; then
+  if [ -S $SSH_AUTH_SOCK ]; then
     info "[$funcname] symlink: $SSH_AUTH_SOCK -> ${auth_sock_symlink}"
     ln -snf $SSH_AUTH_SOCK ${auth_sock_symlink}
     export SSH_AUTH_SOCK=${auth_sock_symlink}
@@ -145,4 +145,4 @@ else
 fi
 auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
 sshagent_singleton
-fix_auth_sock $terminal
+fix_auth_sock $auth_sock_symlink
