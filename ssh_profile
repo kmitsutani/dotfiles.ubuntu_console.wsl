@@ -138,10 +138,16 @@ function fix_auth_sock {
 
 username=$(whoami)
 login_info=($(last $username | head -n 1))
-if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
-  hostname=$(curl -s ifconfig.io)
+if [[ $(uname -a) =~ Linux.*Microsoft ]];then
+  # WSL
+  hostname=$(hostname)
 else
-  hostname=${login_info[1]}
+  # mac or GNU/Linux
+  if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
+    hostname=$(curl -s ifconfig.io)
+  else
+    hostname=${login_info[2]}
+  fi
 fi
 auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
 sshagent_singleton
