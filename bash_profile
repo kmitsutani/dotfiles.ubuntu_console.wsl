@@ -24,6 +24,10 @@ export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 # ssh
 . $HOME/.ssh_profile
 
+if [ -f $HOME/.profile ]; then
+  . $HOME/.profile
+fi
+
 # virtualenv wrapper
 if [ -f "$(which virtualenvwrapper.sh)" ]; then
     export WORKON_HOME=$HOME/.virtualenvs
