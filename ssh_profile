@@ -138,19 +138,22 @@ function fix_auth_sock {
 
 function echo_auth_sock_symlink(){
   username=$(whoami)
-  login_info=($(last $username | head -n 1))
   if [[ $(uname -a) =~ Linux.*Microsoft ]];then
     # WSL
-    hostname=$(hostname)
+    from=$(hostname)
   else
     # mac or GNU/Linux
-    if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
+    login_info=($(last $username | head -n 1))
+    from=${login_info[2]}
+    if [[ $from =~ ^[A-Z] ]]; then
       hostname=$(curl -s ifconfig.io)
     else
-      hostname=${login_info[2]}
+      if [[ $form =~ ^tmux ]]; then
+        from=${from%.*}
+      fi
     fi
   fi
-  auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
+  auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${from}
   echo ${auth_sock_symlink}
 }
 
