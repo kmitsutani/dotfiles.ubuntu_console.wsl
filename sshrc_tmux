@@ -12,7 +12,7 @@ function echo_auth_sock_symlink(){
   if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
     hostname=$(curl -s ifconfig.io)
   else
-    hostname=${login_info[1]}
+    hostname=${login_info[2]}
   fi
   auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
   echo auth_sock_symlink
