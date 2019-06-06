@@ -1,6 +1,6 @@
 # To avoid duplicated activation
 # Source SSH settings, if applicable
-AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock_
+AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock
 
 function info(){
   echo $1 >&2

@@ -1,7 +1,7 @@
 # To avoid duplicated activation
 # Source SSH settings, if applicable
 SSH_ENV="${HOME}/.ssh/environment"
-AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock_
+AUTHSOCK_PREFIX=${HOME}/.ssh/auth_sock
 SSHAGENT=/usr/bin/ssh-agent
 SSHAGENTARGS="-s"
 
