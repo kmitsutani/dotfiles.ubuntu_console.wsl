@@ -26,7 +26,7 @@ function echo_auth_sock_symlink(){
     fi
   fi
   auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
-  echo auth_sock_symlink
+  echo ${auth_sock_symlink}
 }
 
 function fix_auth_sock {
