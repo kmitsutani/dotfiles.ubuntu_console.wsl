@@ -8,11 +8,22 @@ function info(){
 
 function echo_auth_sock_symlink(){
   username=$(whoami)
-  login_info=($(last $username | head -n 1))
-  if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
-    hostname=$(curl -s ifconfig.io)
+  if [[ $(uname -a) =~ Linux.*Microsoft ]];then
+    # WSL
+    hostname=$(hostname)
   else
-    hostname=${login_info[2]}
+    # mac or GNU/Linux
+    login_info=($(last $username | head -n 1))
+    fromwhere=${login_info[2]}
+    if [[ $fromwhere =~ ^[A-Z] ]]; then
+      hostname=$(curl -s ifconfig.io)
+    else
+      if [[ $fromwhere =~ ^tmux ]];then
+        hostname=${fromwhere%.*}
+      else
+        hostname=$fromwhere
+      fi
+    fi
   fi
   auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
   echo auth_sock_symlink
