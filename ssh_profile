@@ -148,7 +148,7 @@ function echo_auth_sock_symlink(){
     if [[ $from =~ ^[A-Z] ]]; then
       hostname=$(curl -s ifconfig.io)
     else
-      if [[ $form =~ ^tmux ]]; then
+      if [[ $from =~ ^tmux ]]; then
         from=${from%.*}
       fi
     fi
