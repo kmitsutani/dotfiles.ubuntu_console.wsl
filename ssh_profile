@@ -136,13 +136,18 @@ function fix_auth_sock {
   fi
 }
 
-username=$(whoami)
-login_info=($(last $username | head -n 1))
-if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
-  hostname=$(curl -s ifconfig.io)
-else
-  hostname=${login_info[2]}
-fi
-auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
+function echo_auth_sock_symlink(){
+  username=$(whoami)
+  login_info=($(last $username | head -n 1))
+  if [[ ${login_info[2]} =~ ^[A-Z] ]]; then
+    hostname=$(curl -s ifconfig.io)
+  else
+    hostname=${login_info[2]}
+  fi
+  auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${hostname}
+  echo auth_sock_symlink
+}
+
+auth_sock_symlink=$(echo_auth_sock_symlink)
 sshagent_singleton
 fix_auth_sock $auth_sock_symlink
