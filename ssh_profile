@@ -137,12 +137,12 @@ function fix_auth_sock {
 }
 
 function echo_auth_sock_symlink(){
-  username=$(whoami)
   if [[ $(uname -a) =~ Linux.*Microsoft ]];then
     # WSL
     from=$(hostname)
   else
     # mac or GNU/Linux
+    username=$(whoami)
     login_info=($(last $username | head -n 1))
     from=${login_info[2]}
     if [[ $from =~ ^[A-Z] ]]; then
@@ -153,10 +153,13 @@ function echo_auth_sock_symlink(){
       fi
     fi
   fi
-  auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${from}
+  auth_sock_symlink=${AUTHSOCK_PREFIX}_${from}
   echo ${auth_sock_symlink}
 }
 
-auth_sock_symlink=$(echo_auth_sock_symlink)
 sshagent_singleton
-fix_auth_sock $auth_sock_symlink
+
+if [ $(find ~/.ssh -name "id*" | wc -l) -eq 0 ]; then
+  auth_sock_symlink=$(echo_auth_sock_symlink)
+  fix_auth_sock $auth_sock_symlink
+fi
