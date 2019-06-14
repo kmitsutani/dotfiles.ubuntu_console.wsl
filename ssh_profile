@@ -150,6 +150,8 @@ function echo_auth_sock_symlink(){
     else
       if [[ $from =~ ^tmux ]]; then
         id=${from%.*}
+      else
+        id=${from}
       fi
     fi
   fi
