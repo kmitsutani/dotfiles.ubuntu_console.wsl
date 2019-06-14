@@ -140,20 +140,20 @@ function echo_auth_sock_symlink(){
   username=$(whoami)
   if [[ $(uname -a) =~ Linux.*Microsoft ]];then
     # WSL
-    from=$(hostname)
+    id=$(hostname)
   else
     # mac or GNU/Linux
-    login_info=($(last $username | head -n 1))
+    login_info=($(last $username | grep -v tmux | head -n 1))
     from=${login_info[2]}
     if [[ $from =~ ^[A-Z] ]]; then
-      hostname=$(curl -s ifconfig.io)
+      id=$(curl -s ifconfig.io)
     else
       if [[ $from =~ ^tmux ]]; then
-        from=${from%.*}
+        id=${from%.*}
       fi
     fi
   fi
-  auth_sock_symlink=${AUTHSOCK_PREFIX}_${username}_${from}
+  auth_sock_symlink=${AUTHSOCK_PREFIX}_${id}
   echo ${auth_sock_symlink}
 }
 
