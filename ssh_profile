@@ -146,11 +146,7 @@ function echo_auth_sock_symlink(){
     login_info=($(last $username | grep -v tmux | head -n 1))
     from=${login_info[2]}
     if [[ $from =~ ^[A-Z] ]]; then
-<<<<<<< HEAD
       id=$(curl -s ifconfig.io)
-=======
-      from=$(curl -s ifconfig.io)
->>>>>>> 1636fcd96d55cf066909b6a3a955b0d714c5cc9d
     else
       if [[ $from =~ ^tmux ]]; then
         id=${from%.*}
