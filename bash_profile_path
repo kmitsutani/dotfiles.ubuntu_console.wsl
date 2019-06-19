@@ -42,6 +42,10 @@ for rpath in ${paths[@]}; do
   add2PATH $rpath
 done
 
+if [ -d '/snap/bin' 
+  
+fi
+
 unset paths
 unset path
 
@@ -54,8 +58,5 @@ PATH=${PATH:1:$((${#PATH} - 2))}
 LF=${oldLF}
 unset oldLF
 
-if [ -f "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc" ]; then
-  . /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc
-fi
 
 export PATH
