@@ -6,6 +6,15 @@ repo = 'Shougo/dein.vim'
 # General for coding/writing
 #--------------------------------
 
+# color scheme
+[[plugins]]
+repo = 'tomasr/molokai'
+hook_add = '''
+   set t_Co=256
+   set termguicolors
+   set background=dark
+'''
+
 # enhance syntacs check
 [[plugins]]
 repo = 'scrooloose/syntastic' 

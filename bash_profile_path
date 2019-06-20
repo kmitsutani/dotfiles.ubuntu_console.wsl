@@ -37,10 +37,13 @@ if [ -d "/home/ubuntu/.miniconda3/" ]; then
   "
 fi
 
-
 for rpath in ${paths[@]}; do
   add2PATH $rpath
 done
+
+if [ -d '/snap/bin' ]; then
+  add2PATH /snap/bin
+fi
 
 unset paths
 unset path
@@ -55,3 +58,15 @@ LF=${oldLF}
 unset oldLF
 
 export PATH
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then
+  source '/Users/mitsutani/google-cloud-sdk/path.bash.inc';
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then
+  source '/Users/mitsutani/google-cloud-sdk/completion.bash.inc';
+fi
+
+

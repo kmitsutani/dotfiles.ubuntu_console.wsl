@@ -1,5 +1,3 @@
-# source .bash_profile if not .bash_profile is not sourced
-
 # aliases
 if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
     alias ls='ls --color=auto'
@@ -15,6 +13,7 @@ alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)
 alias sudoh="sudo -H"
 alias ssh="ssh -A"
 alias pip="python -m pip"
+alias jnb="jupyter-notebook"
 
 # shell functions
 function viewone(){
@@ -67,9 +66,6 @@ HISTTIMEFORMAT='%Y-%m-%d %T '
 
 export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \[\033[00m\]\n[\d \t]\$ "
 HISTTIMEFORMAT='200~%Y-%m-%d %T '
-
-# ssh
-. $HOME/.ssh_profile
 
 export PATH="/home/ubuntu/miniconda3/bin:$PATH"
 
