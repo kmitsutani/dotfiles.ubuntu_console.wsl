@@ -1,78 +1,82 @@
-# aliases
-if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
-    alias ls='ls --color=auto'
-else
-    alias ls='ls -G'
-fi
-alias preview='open -a Preview'
-alias beep='afplay /System/Library/Sounds/Submarine.aiff'
-alias cronedit='crontab -e'
-alias cronlist='crontab -l'
-alias vi="vim -u /etc/vimrc --noplugin"
-alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
-alias sudoh="sudo -H"
-alias ssh="ssh -A"
-alias pip="python -m pip"
-alias jnb="jupyter-notebook"
-
-# shell functions
-function viewone(){
-  if [ "$1" == "" ]; then
-    echo "Usage: viewone path"
-    return 0
+if [ "${__BASHRC_SOURCED__}" != "1:$TMUX" ];then
+  # aliases
+  if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
+      alias ls='ls --color=auto'
+  else
+      alias ls='ls -G'
   fi
-  ls $1 | head -n 1 | xargs -I{} less {}
-}
+  alias preview='open -a Preview'
+  alias beep='afplay /System/Library/Sounds/Submarine.aiff'
+  alias cronedit='crontab -e'
+  alias cronlist='crontab -l'
+  alias vi="vim -u /etc/vimrc --noplugin"
+  alias cpan-uninstall='perl -MConfig -MExtUtils::Install -e '"'"'($FULLEXT=shift)=~s{-}{/}g;uninstall "$Config{sitear    chexp}/auto/$FULLEXT/.packlist",1'"'"
+  alias sudoh="sudo -H"
+  alias ssh="ssh -A"
+  alias pip="python -m pip"
+  alias jnb="jupyter-notebook"
 
-function hyperthumb(){
-    sudo xkbcomp -I$HOME/.xkb/hyperthumb $HOME/.xkb/hyperthumb/keymap $DISPLAY
-}
+  # shell functions
+  function viewone(){
+    if [ "$1" == "" ]; then
+      echo "Usage: viewone path"
+      return 0
+    fi
+    ls $1 | head -n 1 | xargs -I{} less {}
+  }
 
-function reprofile(){
-    source ~/.bash_profile
-}
+  function hyperthumb(){
+      sudo xkbcomp -I$HOME/.xkb/hyperthumb $HOME/.xkb/hyperthumb/keymap $DISPLAY
+  }
 
-function use_miniconda2_ldpath(){
-  export LD_LIBRARY_PATH=${HOME}/.miniconda2/lib
-}
+  function reprofile(){
+      source ~/.bash_profile
+  }
 
-function use_miniconda3_ldpath(){
-  export LD_LIBRARY_PATH=${HOME}/.miniconda3/lib
-}
+  function use_miniconda2_ldpath(){
+    export LD_LIBRARY_PATH=${HOME}/.miniconda2/lib
+  }
 
-function ls_ssh_agents(){
-  find /tmp -name "ssh*" -type d |\
-    xargs -I{} find {} -name "agent*" -type s -print0 |\
-    xargs -0 -I{} ls $@ {} 
-}
+  function use_miniconda3_ldpath(){
+    export LD_LIBRARY_PATH=${HOME}/.miniconda3/lib
+  }
 
-# record time stamp to history
-HISTTIMEFORMAT='%Y-%m-%d %T '
+  function ls_ssh_agents(){
+    find /tmp -name "ssh*" -type d |\
+      xargs -I{} find {} -name "agent*" -type s -print0 |\
+      xargs -0 -I{} ls $@ {} 
+  }
 
-# osdep bashrc
-[ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep
+  # record time stamp to history
+  HISTTIMEFORMAT='%Y-%m-%d %T '
 
-# machine dependent bashrc
-[ -f $HOME/.bashrc_machine ] && . $HOME/.bashrc_machine
+  # osdep bashrc
+  [ -f $HOME/.bashrc_osdep ] && . $HOME/.bashrc_osdep
 
-# dircolors
-[ -f $HOME/.dircolors ] && eval $(dircolors $HOME/.dircolors -b)
+  # machine dependent bashrc
+  [ -f $HOME/.bashrc_machine ] && . $HOME/.bashrc_machine
 
-# Pythonbrew
-[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+  # dircolors
+  [ -f $HOME/.dircolors ] && eval $(dircolors $HOME/.dircolors -b)
 
-# TMUX
-[ ! -z "$TMUX" ] && . $HOME/.bash_profile
+  # Pythonbrew
+  [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
 
-export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \[\033[00m\]\n[\d \t]\$ "
-HISTTIMEFORMAT='200~%Y-%m-%d %T '
+  # TMUX
+  [ ! -z "$TMUX" ] && . $HOME/.bash_profile
 
-export PATH="/home/ubuntu/miniconda3/bin:$PATH"
+  export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \[\033[00m\]\n[\d \t]\$ "
+  HISTTIMEFORMAT='200~%Y-%m-%d %T '
 
-if [ -f ${HOME}/etc/mintty-colors-solarized/sol.dark ];then
-  source ${HOME}/etc/mintty-colors-solarized/sol.dark 
-fi
+  export PATH="/home/ubuntu/miniconda3/bin:$PATH"
 
-if [ -f ${HOME}/etc/dircolors-solarized/dircolors.ansi-dark ];then
-  eval `dircolors ${HOME}/etc/dircolors-solarized/dircolors.ansi-dark`
+  if [ -f ${HOME}/etc/mintty-colors-solarized/sol.dark ];then
+    source ${HOME}/etc/mintty-colors-solarized/sol.dark 
+  fi
+
+  if [ -f ${HOME}/etc/dircolors-solarized/dircolors.ansi-dark ];then
+    eval `dircolors ${HOME}/etc/dircolors-solarized/dircolors.ansi-dark`
+  fi
+
+  export __BASHRC_SOURCED__="1:${TMUX}"
 fi
