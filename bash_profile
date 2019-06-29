@@ -1,4 +1,4 @@
-if [ "${__BASH_PROFILE_SOURCED__}" != "1:$TMUX" ];then
+if [ "${__BASH_PROFILE_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
   ## add given path to PATH
   . $HOME/.bash_profile_path
 
@@ -41,6 +41,6 @@ if [ "${__BASH_PROFILE_SOURCED__}" != "1:$TMUX" ];then
     echo "you have something to do with dotfiles git repository"
   fi
 
-  export __BASH_PROFILE_SOURCED__="1:${TMUX}"
+  export __BASH_PROFILE_SOURCED__="1:${TMUX}:${VIRTUAL_ENV}"
 fi
 

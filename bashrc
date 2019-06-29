@@ -1,4 +1,4 @@
-if [ "${__BASHRC_SOURCED__}" != "1:$TMUX" ];then
+if [ "${__BASHRC_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
   # aliases
   if [ $(ls --help 2>&1 | grep GNU | wc -l) -gt 0 ]; then
       alias ls='ls --color=auto'
@@ -78,5 +78,5 @@ if [ "${__BASHRC_SOURCED__}" != "1:$TMUX" ];then
     eval `dircolors ${HOME}/etc/dircolors-solarized/dircolors.ansi-dark`
   fi
 
-  export __BASHRC_SOURCED__="1:${TMUX}"
+  export __BASHRC_SOURCED__="1:${TMUX}:${VIRTUAL_ENV}"
 fi
