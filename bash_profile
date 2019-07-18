@@ -9,8 +9,9 @@ export EDITOR=vim
 
 # LL module/package paths
 if [ $(which pyenv | wc -l) -eq 0 ]; then
-  PYTHONPATH=/usr/local/lib/python2.7/site-packages
-  PYTHONPATH=$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages
+  pythonpath_global=$(find /usr/local/lib -type d -name "python3.*" -maxdepth 1 | tr '\n' ':')
+  pythonpath_local=$(find $HOME/.local/lib -type d -name "python3.*" -maxdepth 1 | tr '\n' ':')
+  PYTHONPATH=${pythonpath_global}:${pythonpath_local}
   export PYTHONPATH
 fi
 
