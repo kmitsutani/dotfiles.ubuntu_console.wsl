@@ -1,11 +1,12 @@
-## add given path to PATH
-. $HOME/.bash_profile_path
+if [ "${__BASH_PROFILE_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
+  ## add given path to PATH
+  . $HOME/.bash_profile_path
 
-export XDG_CONFIG_HOME=$HOME/.config
+  export XDG_CONFIG_HOME=$HOME/.config
 
-export LANG=en_US.UTF-8
-# configure miscellaneous environmental vaiables
-export EDITOR=vim
+  export LANG=en_US.UTF-8
+  # configure miscellaneous environmental vaiables
+  export EDITOR=vim
 
 # LL module/package paths
 if [ $(which pyenv | wc -l) -eq 0 ]; then
@@ -39,12 +40,13 @@ if [ -f "$(which virtualenvwrapper.sh)" ]; then
     source $(which virtualenvwrapper.sh)
 fi
 
-
-[[ -z "$TMUX" ]] && . $HOME/.bashrc
-
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
 if [ ! -z "$(cd ${HOME}/dotfiles; git status -s)" ]; then
   echo "you have something to do with dotfiles git repository"
+fi
+
+if [ __BASH_PROFILE_SOURCED__ == "" ]; then
+  export __BASH_PROFILE_SOURCED__="1:${TMUX}:${VIRTUAL_ENV}"
 fi
 
