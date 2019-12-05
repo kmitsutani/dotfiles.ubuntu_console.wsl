@@ -98,11 +98,11 @@ function fix_auth_sock {
     return 0
   fi
 
-  if [ -S ${authsock_symlink} ]; then
-    # ${authsock_symlink} is a socket
-    info "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
-    info "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
-    export SSH_AUTH_SOCK=${authsock_symlink}
+  if [ -S ${auth_sock_symlink} ]; then
+    # ${auth_sock_symlink} is a socket
+    info "[$funcname] INFO: a ssh-agent socket found ${auth_sock_symlink}."
+    info "[$funcname] INFO: set SSH_AUTH_SOCK to ${auth_sock_symlink} "
+    export SSH_AUTH_SOCK=${auth_sock_symlink}
     return 0
   fi
 
