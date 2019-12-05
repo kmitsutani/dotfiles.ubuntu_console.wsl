@@ -24,6 +24,8 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 export MPTK_CONFIG_FILENAME=/usr/local/mptk/path.xml
 
 
+find $HOME/.ssh -xtype l | xargs -I{} rm {}
+
 # ssh
 . $HOME/.ssh_profile
 
@@ -45,5 +47,4 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 if [ ! -z "$(cd ${HOME}/dotfiles; git status -s)" ]; then
   echo "you have something to do with dotfiles git repository"
 fi
-
 
