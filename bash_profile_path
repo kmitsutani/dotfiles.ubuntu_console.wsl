@@ -65,4 +65,6 @@ if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then
   source '/Users/mitsutani/google-cloud-sdk/completion.bash.inc';
 fi
 
-
+if [ -d /usr/local/opt/lsof/bin ];then
+  export PATH="/usr/local/opt/lsof/bin:$PATH"
+fi
