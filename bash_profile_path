@@ -41,6 +41,10 @@ for rpath in ${paths[@]}; do
   add2PATH $rpath
 done
 
+if [ -d '/snap/bin' ]; then
+  add2PATH /snap/bin
+fi
+
 unset paths
 unset path
 

@@ -18,7 +18,7 @@ function start_agent {
     . "${SSH_ENV}"
     id_files=($(find ${HOME}/.ssh -name "id_*" | wc -l))
     if [ ${#id_files[@]} -gt 0 ]; then
-      for id_file in ${id_files{@}};
+      for id_file in ${id_files[@]};
       do
         info "ssh-add $id_file"
         ssh-add $id_file
@@ -90,50 +90,36 @@ function fix_auth_sock {
   auth_sock_symlink=$1
 
   # initial candidate
-  if [[ $SSH_AUTH_SOCK =~ ^$HOME ]]; then
-    return
-  fi
-  if [ -S $SSH_AUTH_SOCK ]; then
+  if [ ${SSH_AUTH_SOCK:0:4} == "/tmp" ] && [ -S $SSH_AUTH_SOCK ]; then
+    # if $SSH_AUTH_SOCk is socket
     info "[$funcname] symlink: $SSH_AUTH_SOCK -> ${auth_sock_symlink}"
     ln -snf $SSH_AUTH_SOCK ${auth_sock_symlink}
     export SSH_AUTH_SOCK=${auth_sock_symlink}
-    return
+    return 0
   fi
 
-  if [ -L ${authsock_symlink} ]; then
-    if [ -S ${authsock_symlink} ]; then
-      info "[$funcname] INFO: a ssh-agent socket found ${authsock_symlink}."
-      info "[$funcname] INFO: set SSH_AUTH_SOCK to ${authsock_symlink} "
-      export SSH_AUTH_SOCK=${authsock_symlink}
-      export AUTHSOCK_SYMLINK=${authsock_symlink}
-    else
-      info "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
-      newest_socket=$(find /tmp -name "ssh*" -type d 2>/dev/null|\
-                      xargs -I{} find {} -name "agent*" -type s -readable -print0 |\
-                      xargs -0 -I{} ls -alu --full-time {} |\
-                      awk '{print $6"-"$7, $9}' |\
-                      sed -e s/://g |\
-                      sort -nr | head -n1 | cut -f 2 -d ' ')
+  if [ -S ${auth_sock_symlink} ]; then
+    # ${auth_sock_symlink} is a socket
+    info "[$funcname] INFO: a ssh-agent socket found ${auth_sock_symlink}."
+    info "[$funcname] INFO: set SSH_AUTH_SOCK to ${auth_sock_symlink} "
+    export SSH_AUTH_SOCK=${auth_sock_symlink}
+    return 0
+  fi
 
-      if [ ! -z "${newest_socket}" ]; then
-        info "[$funcname] INFO: new socket found at '${newest_socket}'."
-        info "[$funcname] INFO: re-linked it to ${authsock_symlink}"
-        ln -snf "$newest_socket" ${authsock_symlink}
-        export SSH_AUTH_SOCK=${authsock_symlink}
-      fi
-    fi
-  elif [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-      /tmp/*/agent.[0-9]*)
-        info "[$funcname] INFO: SSH_AUTH_SOCK=${SSH_AUTH_SOCK};"
-        info "[$funcname] INFO: link it to ${authsock_symlink} and re-export;" 
-        ln -snf "$SSH_AUTH_SOCK" ${authsock_symlink}
-        export SSH_AUTH_SOCK=${authsock_symlink}
-        ;;
-      "${authsock_symlink}")
-        info "[$funcname] INFO: ssh-agent authentication socket is already fixed. do nothing."
-        ;;
-    esac
+  # ${authcok_symlink} is deadlink
+  info "[$funcname] INFO: ${authsock_symlink} found but link is dead..."
+  newest_socket=$(find /tmp -name "ssh*" -type d 2>/dev/null|\
+                  xargs -I{} find {} -name "agent*" -type s -readable -print0 |\
+                  xargs -0 -I{} ls -alu --full-time {} |\
+                  awk '{print $6"-"$7, $9}' |\
+                  sed -e s/://g |\
+                  sort -nr | head -n1 | cut -f 2 -d ' ')
+
+  if [ ! -z "${newest_socket}" ]; then
+    info "[$funcname] INFO: new socket found at '${newest_socket}'."
+    info "[$funcname] INFO: re-linked it to ${authsock_symlink}"
+    ln -snf ${newest_socket} ${authsock_symlink}
+    export SSH_AUTH_SOCK=${authsock_symlink}
   else
     info "[$funcname] ERROR: no socket found."
   fi
@@ -146,7 +132,7 @@ function echo_auth_sock_symlink(){
   else
     # mac or GNU/Linux
     username=$(whoami)
-    login_info=($(last $username | grep -v tmux | head -n 1))
+    login_info=($(last -50 -i $username | awk -F' ' '{if($3 != "0.0.0.0"){print $0}}' | head -n 1))
     from=${login_info[2]}
     if [[ $from =~ ^[A-Z] ]]; then
       id=$(curl -s ifconfig.io)
