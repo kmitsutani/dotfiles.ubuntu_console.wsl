@@ -36,5 +36,4 @@ site 'https://mail.google.com/*' {
     map j passkeys
     map k passkeys
     map s passkeys
-    A
 }
