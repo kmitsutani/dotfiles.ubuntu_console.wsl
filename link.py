@@ -16,11 +16,22 @@ with Path('./srcdist.txt').open('r') as fin:
         elif line.startswith('@reqdir'):
             directories = line.split('=')[1].split(':')
             for directory in directories:
-                (homedir / directory).mkdir(parents=True)
+                targetdir = homedir / directory
+                if not targetdir.is_dir():
+                    targetdir.mkdir(parents=True)
         else:
-            src, dst = line.strip().split('=').split(':')
-            if dst == "":
+            line_str = line.strip()
+            if line_str == "":
+                continue
+            elms = line.strip().split(':')
+            if elms[1] == "":
+                src = elms[0]
                 dst = "." + src
+            else:
+                src, dst = elms
             srcpath = cdir / src
             dstpath = homedir / dst
-            srcpath.symlink_to(dstpath)
+            if dstpath.exists():
+                old_dst = dstpath.parent / (dstpath.name + ".old")
+                dstpath.rename(old_dst)
+            dstpath.symlink_to(srcpath)
