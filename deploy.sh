@@ -2,7 +2,7 @@
 wd=$(cd $(dirname $0); pwd)
 cd $wd
 
-sudo apt-get install bc tmux
+sudo apt-get install bc git tmux
 
 _lndot(){
   line=$1  
@@ -79,7 +79,11 @@ cp $wd/ssh_config $HOME/.ssh/config
 # change permission of ssh_config
 chmod 600 $HOME/.ssh/config
 
-# tmux-mouse
+# tmux-plugins
+if [ ! -d $HOME/.tmux/plugins ]; then
+  mkdir -p $HOME/.tmux/plugins
+fi
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 [ ! -d $HOME/.tmux ] && mkdir -p $HOME/.tmux
 _tmuxver=$(tmux -V | sed -e 's/[^0-9.]//g')
 if [ $(bc <<< "$_tmuxver > 2.0") -ne 0 ]; then
