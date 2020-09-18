@@ -5,8 +5,6 @@
 bash_profile:
 bash_profile_path:
 ssh_profile:
-sshrc_tmux:
-bashrc:
 bash_logout:
 
 # vim
@@ -17,6 +15,9 @@ vim/rc/dein_lazy.toml:
 
 # tmux
 tmux.conf:
+
+# ssh
+ssh_config:.ssh/config
 
 # xkb (for X11)
 xkb:

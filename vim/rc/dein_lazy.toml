@@ -123,15 +123,6 @@ hook_add = '''
 repo = 'AtsushiSakai/bookmarklet.vim'
 on_ft = 'javascript'
 
-# markdown
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['mkd', 'md', 'markdown']
-hook_add = '''
-  let g:vim_markdown_frontmatter = 1
-  let g:vim_markdown_math = 1
-'''
-
 # TOML
 [[plugins]]
 repo = 'cespare/vim-toml'
