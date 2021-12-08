@@ -45,6 +45,11 @@ Host gcp-lang
   Port 22
   User mitsutani
 
+Host gcp-tl
+  HostName 34.84.181.211
+  Port 22
+  User mitsutani
+
 # gateway to fd network
 Host gateway
   User mitsutani
