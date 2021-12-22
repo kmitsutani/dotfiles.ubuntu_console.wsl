@@ -30,9 +30,6 @@ if [ "${__BASH_PROFILE_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
   # ssh
   . $HOME/.ssh_profile
 
-  if [ -f $HOME/.profile ]; then
-    . $HOME/.profile
-  fi
 
   # virtualenv wrapper
   if [ -f "$(which virtualenvwrapper.sh)" ]; then
@@ -49,3 +46,6 @@ if [ "${__BASH_PROFILE_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
   export __BASH_PROFILE_SOURCED__="1:${TMUX}:${VIRTUAL_ENV}"
 fi
 
+if [ -f $HOME/.profile ]; then
+  . $HOME/.profile
+fi

@@ -27,6 +27,8 @@ Host home-win
   Port 22
   User kazuya
 
+# LXC instances on d8
+
 
 # GCP instance
 # on-development
@@ -90,6 +92,9 @@ Host fd-ub16
   HostName 192.168.48.113
   User ubuntu
 
+Host fd-gpu
+  HostName 10.202.66.100
+  User ubuntu
 # General Multiple Port-forwarding (http://qiita.com/kawaz/items/a0151d3aa2b6f9c4b3b8)
 #Host */*
 #  ProxyCommand ssh -W "$(basename "%h")":%p "$(dirname "%h")"
