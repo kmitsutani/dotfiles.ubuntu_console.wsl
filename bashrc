@@ -76,7 +76,8 @@ if [ "${__BASHRC_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
   fi
 
   export __BASHRC_SOURCED__="1:${TMUX}:${VIRTUAL_ENV}"
+
+  # TMUX
+  [ ! -z "$TMUX" ] && . $HOME/.bash_profile
 fi
 
-# TMUX
-[ ! -z "$TMUX" ] && . $HOME/.bash_profile

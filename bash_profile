@@ -44,8 +44,9 @@ if [ "${__BASH_PROFILE_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
   fi
 
   export __BASH_PROFILE_SOURCED__="1:${TMUX}:${VIRTUAL_ENV}"
+
+  if [ -f $HOME/.profile ]; then
+    . $HOME/.profile
+  fi
 fi
 
-if [ -f $HOME/.profile ]; then
-  . $HOME/.profile
-fi
