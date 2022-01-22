@@ -1,8 +1,9 @@
 # general settings
-ServerAliveInterval 15
-ServerAliveCountMax 15
-TCPKeepAlive yes
-ForwardAgent yes
+Host *
+  ServerAliveInterval 15
+  ServerAliveCountMax 15
+  TCPKeepAlive yes
+  ForwardAgent yes
 
 # inside or outside of FD-network
 Match host fd* exec "test $(dig +short zentyal.fairydevices.local | wc -l) -eq 0"

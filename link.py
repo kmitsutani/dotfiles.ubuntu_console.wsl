@@ -10,6 +10,7 @@ with Path('./srcdist.txt').open('r') as fin:
         if line.startswith('#'):
             continue
         elif line.startswith('@reqcmd'):
+            continue
             commands = line.split('=')[1].split(':')
             for cmd in commands:
                 subprocess.run(['sudo', 'apt', 'install', cmd]) 

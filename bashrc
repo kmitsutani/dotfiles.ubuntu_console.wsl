@@ -65,7 +65,7 @@ if [ "${__BASHRC_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
   export PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \[\033[00m\]\n[\d \t]\$ "
   HISTTIMEFORMAT='200~%Y-%m-%d %T '
 
-  export PATH="/home/ubuntu/miniconda3/bin:$PATH"
+# export PATH="/home/ubuntu/miniconda3/bin:$PATH"  # commented out by conda initialize
 
   if [ -f ${HOME}/etc/mintty-colors-solarized/sol.dark ];then
     source ${HOME}/etc/mintty-colors-solarized/sol.dark 
@@ -77,7 +77,24 @@ if [ "${__BASHRC_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
 
   export __BASHRC_SOURCED__="1:${TMUX}:${VIRTUAL_ENV}"
 
+  # >>> conda initialize >>>
+  # !! Contents within this block are managed by 'conda init' !!
+  __conda_setup="$('/home/mitsutani/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "/home/mitsutani/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "/home/mitsutani/miniconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="/home/mitsutani/miniconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+  # <<< conda initialize <<<
+
   # TMUX
   [ ! -z "$TMUX" ] && . $HOME/.bash_profile
 fi
+
+
 
