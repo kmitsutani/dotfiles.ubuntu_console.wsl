@@ -72,3 +72,7 @@ fi
 if [ -d /usr/local/opt/lsof/bin ];then
   export PATH="/usr/local/opt/lsof/bin:$PATH"
 fi
+
+if [ -d /home/mitsutani/tf_objdet/models/protobuf ]; then
+  export PATH="/home/mitsutani/tf_objdet/models/protobuf:$PATH"
+fi
