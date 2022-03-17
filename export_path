@@ -1,0 +1,33 @@
+# basic paths
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+# additional paths
+paths=()
+# set PATH so it includes user's private bin if it exists
+[ -d "$HOME/bin" ] && paths+=("$HOME/bin")
+[ -d "$HOME/.local/bin" ] && paths+=("$HOME/.local/bin")
+[ -d "/usr/local/bin" ] && paths+=("/usr/local/bin/")
+[ -d "/usr/local/sbin" ] && paths+=("/usr/local/sbin")
+[ -d "/home/ubuntu/.miniconda3/" ] && paths+=("/home/ubuntu/.miniconda3/bin")
+[ -d "/snap/bin" ] && paths+=("/snap/bin" )
+
+for rpath in ${paths[@]}; do
+  PATH="${PATH}:${rpath}"
+done
+
+unset paths
+
+# prior paths
+[ -d "/usr/local/opt/lsof/bin" ] && PATH="/usr/local/opt/lsof/bin:${PATH}"
+[ -d "/home/mitsutani/tf_objdet/models/protobuf" ] && PATH="/home/mitsutani/tf_objdet/models/protobuf:${PATH}"
+
+## trim doubling
+oldLF=${LF:-""}
+LF=$(printf '\\\012_') 
+LF=${LF%_} 
+PATH=$(echo $PATH | sed -e "s/:/$LF/g" | sort -r | uniq | perl -pe 's/\n/:/g;')
+PATH=${PATH:1:$((${#PATH} - 2))}
+LF=${oldLF}
+unset oldLF
+
+export PATH
