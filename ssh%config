@@ -9,11 +9,6 @@ Host bitbucket.org
   HostName bitbucket.org
   AddressFamily inet
 
-Host home-rpi
-  HostName maxwells.daemon.asia
-  User kazuya
-  Port 24842
-
 Host home-win
   HostName alianware
   Port 22
