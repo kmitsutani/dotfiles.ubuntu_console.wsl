@@ -148,6 +148,9 @@ function echo_auth_sock_symlink(){
   echo ${auth_sock_symlink}
 }
 
+function cleanup_old_authsocks () {
+  find $HOME/.ssh -xtype l -name "auth_sock*" | xargs -I{} rm {}
+}
 sshagent_singleton
 
 if [ $(find ~/.ssh -name "id*" | wc -l) -eq 0 ]; then
