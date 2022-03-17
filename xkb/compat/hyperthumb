@@ -1,4 +1,0 @@
-default xkb_compatibility "modthumb" {
-  interpret Hyper_L { action = SetMods(modifiers=Mod4); };
-  interpret Hyper_R { action = SetMods(modifiers=Mod5); };
-};
