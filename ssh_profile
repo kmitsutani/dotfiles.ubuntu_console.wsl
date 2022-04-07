@@ -16,7 +16,7 @@ function start_agent {
     info "succeeded!"
     chmod 600 "${SSH_ENV}"
     . "${SSH_ENV}"
-    id_files=($(find ${HOME}/.ssh -name "id_*" | wc -l))
+    id_files=($(find ${HOME}/.ssh -name "pvtid_*" | wc -l))
     if [ ${#id_files[@]} -gt 0 ]; then
       for id_file in ${id_files[@]};
       do
@@ -43,7 +43,7 @@ function start_sshagent {
   info -n "[$funcname] " 
   cat $tmpfile
 
-  id_files=($(find ${HOME}/.ssh -maxdepth 1 -name "id_*"))
+  id_files=($(find ${HOME}/.ssh -maxdepth 1 -name "pvtid_*"))
   if [ ${#id_files[@]} -gt 0 ]; then
     for id_file in ${id_files[@]};
     do
@@ -60,7 +60,7 @@ function start_sshagent {
 
 function sshagent_singleton {
   funcname="ssh-agent-singleton"
-  if [ $(find ${HOME}/.ssh -name "id_*" | wc -l) -eq 0 ]; then
+  if [ $(find ${HOME}/.ssh -name "pvtid_*" | wc -l) -eq 0 ]; then
     info "[$funcname] INFO: not a client machine. skip;"
     return
   fi
@@ -90,7 +90,7 @@ function fix_auth_sock {
   auth_sock_symlink=$1
 
   # initial candidate
-  if [ ${SSH_AUTH_SOCK:0:4} == "/tmp" ] && [ -S $SSH_AUTH_SOCK ]; then
+  if [ ":${SSH_AUTH_SOCK:0:4}" = ":/tmp" ] && [ -S $SSH_AUTH_SOCK ]; then
     # if $SSH_AUTH_SOCk is socket
     info "[$funcname] symlink: $SSH_AUTH_SOCK -> ${auth_sock_symlink}"
     ln -snf $SSH_AUTH_SOCK ${auth_sock_symlink}
