@@ -66,7 +66,7 @@ if [ "${__BASHRC_SOURCED__}" != "1:$TMUX:$VIRTUAL_ENV" ];then
 
   case $- in                                                                        
     *i*)                                                                              
-      if [ ! -z "$(cd ${HOME}/dotfiles; git status -s)" ]; then
+      if [ ! -z "$(cd ${HOME}/dotfiles.ubuntu_console.wsl ; git status -s)" ]; then
         echo "[info] you have something to do with dotfiles git repository"
       fi
       ;;                                                                            
